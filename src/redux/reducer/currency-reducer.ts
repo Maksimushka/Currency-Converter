@@ -39,6 +39,12 @@ export const currencyReducer = (state = initialState, action: CurrencyActionsTyp
                 currencies: action.payload
             }
         }
+        case ActionsTypes.SET_CURRENT_CURRENCY: {
+            return {
+                ...state,
+                currentCurrency: action.payload
+            }
+        }
         default:
             return state
     }

@@ -20,9 +20,7 @@ export type setCurrenciesACType = {
 }
 export type setCurrentCurrencyACType = {
     type: ActionsTypes.SET_CURRENT_CURRENCY
-    payload: {
-
-    }
+    payload: string
 }
 export type changeFieldValueACType = {
     type: ActionsTypes.CHANGE_FIELD_VALUE
@@ -39,15 +37,13 @@ export const setIsBuyingAC = (isBuying: boolean): setIsBuyingACType => ({
         isBuying
     }
 })
-export const setCurrenciesAC = (USD: currency, EUR: currency): setCurrenciesACType => ({
+export const setCurrenciesAC = (currencies: currency[]): setCurrenciesACType => ({
     type: ActionsTypes.SET_CURRENCIES,
-    payload: [USD, EUR]
+    payload: currencies
 })
-export const setCurrentCurrency = (): setCurrentCurrencyACType => ({
+export const setCurrentCurrency = (currency: string): setCurrentCurrencyACType => ({
     type: ActionsTypes.SET_CURRENT_CURRENCY,
-    payload: {
-
-    }
+    payload: currency
 })
 export const changeFieldValueAC = (): changeFieldValueACType => ({
     type: ActionsTypes.CHANGE_FIELD_VALUE,
@@ -59,7 +55,7 @@ export const changeFieldValueAC = (): changeFieldValueACType => ({
 // THUNK CREATORS
 export const getCurrencies = () => (dispatch: any) => {
     const currencies = getData().then(resp => {
-        dispatch(setCurrenciesAC(resp.USD, resp.EUR))
+        dispatch(setCurrenciesAC([resp.USD, resp.EUR, resp.GBP, resp.CHF, resp.CNY]))
     })
     console.log(currencies)
 }

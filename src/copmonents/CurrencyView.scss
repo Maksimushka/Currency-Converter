@@ -2,11 +2,13 @@
   outline: none;
 }
 
-
 .currency {
-  border: 1px solid black;
   display: flex;
   justify-content: space-around;
+  width: 100%;
+  min-height: 150px;
+  flex-wrap: wrap;
+  align-items: center;
 
   &-block {
     display: flex;
@@ -16,8 +18,15 @@
     border: 1px solid black;
     cursor: pointer;
 
-    width: 150px;
+    min-width: 150px;
     height: 100px;
+
+    &:hover {
+      background-color: #f8efef;
+    }
+    &:active {
+      background-color: white;
+    }
 
     h2 {
       text-align: center;
@@ -28,17 +37,26 @@
       font-size: 16px;
       text-align: center;
     }
+    .up {
+      color: red;
+    }
+    .down {
+      color: green;
+    }
   }
 }
 
 .buy-sell {
   display: flex;
   justify-content: space-around;
-  width: 260px;
+  align-items: center;
+  width: 50%;
+  min-width: 260px;
+  height: 150px;
 
   button {
-    width: 80px;
-    height: 30px;
+    width: 90px;
+    height: 35px;
     border-radius: 7px;
     cursor: pointer;
     border: 1px solid #e75a5a;
@@ -55,6 +73,10 @@
       color: #e75a5a;
     }
   }
+  .active {
+    background-color: #e75a5a;
+    color:  white;
+  }
 }
 
 .fields {
@@ -63,16 +85,28 @@
   align-items: center;
   width: 100%;
   flex-direction: column;
-  border: 1px solid black;
-  min-height: 200px;
+  min-height: 280px;
+  margin-bottom: 20px;
 
-  input {
-    font-size: 22px;
-    padding-left: 10px;
-    outline: none;
-    border: 1px solid black;
-    width: 60%;
-    border-radius: 10px;
-    height: 45px;
+  label {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    span {
+      margin-bottom: 20px;
+    }
+    input {
+      font-size: 22px;
+      padding-left: 10px;
+      outline: none;
+      border: 1px solid black;
+      width: 60%;
+      border-radius: 10px;
+      height: 45px;
+    }
   }
+
 }
