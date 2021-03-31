@@ -1,21 +1,46 @@
-type currency = {
-    name: string
-    value: number
+import {ActionsTypes, CurrencyActionsType} from '../actions/actions';
+
+export type currency = {
+    CharCode: string
+    Value: number
+    Previous: number
+    ID: string
+    Name: string
+    Nominal: number
+    NumCode: string
 }
-type CurrencyReducerStateType = {
+export type CurrencyReducerStateType = {
     currencies: currency[] | []
+    isBuying: boolean
+    currentCountRUB: string
+    currentCountCurrency: string
+    currentCurrency: string
 }
 
 const initialState: CurrencyReducerStateType = {
-    currencies: []
+    currencies: [],
+    isBuying: true,
+    currentCountRUB: '',
+    currentCountCurrency: '',
+    currentCurrency: 'EUR'
 }
 
-export const currencyReducer = (state: CurrencyReducerStateType = initialState, action: any): CurrencyReducerStateType => {
+export const currencyReducer = (state = initialState, action: CurrencyActionsType): CurrencyReducerStateType => {
     switch (action.type) {
-        case 'SET_USD': {
-            return state
+        case ActionsTypes.SET_ISBUYING: {
+            return {
+                ...state,
+                ...action.payload
+            }
+        }
+        case ActionsTypes.SET_CURRENCIES: {
+            return {
+                ...state,
+                currencies: action.payload
+            }
         }
         default:
             return state
     }
 }
+
