@@ -1,0 +1,12 @@
+.App {
+  margin: 0 auto;
+  margin-top: 130px;
+  display: flex;
+  width: 60%;
+  align-items: center;
+  min-height: 500px;
+  border: 1px solid black;
+  justify-content: space-around;
+
+  flex-direction: column;
+}
