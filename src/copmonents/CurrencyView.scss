@@ -2,6 +2,8 @@
   outline: none;
 }
 
+$redColor: #e75a5a;
+
 .currency {
   display: flex;
   justify-content: space-around;
@@ -47,6 +49,10 @@
       color: green;
     }
   }
+
+  .active {
+    border: 2px solid $redColor;
+  }
 }
 
 .buy-sell {
@@ -62,24 +68,24 @@
     height: 35px;
     border-radius: 7px;
     cursor: pointer;
-    border: 1px solid #e75a5a;
+    border: 1px solid $redColor;
     background-color: white;
-    color: #e75a5a;
+    color: $redColor;
     font-size: 17px;
 
     &:hover {
-      background-color: #e75a5a;
+      background-color: $redColor;
       color: white;
     }
 
     &:active {
       background-color: white;
-      color: #e75a5a;
+      color: $redColor;
     }
   }
 
   .active {
-    background-color: #e75a5a;
+    background-color: $redColor;
     color: white;
   }
 }
@@ -88,13 +94,15 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 60%;
+  width: 90%;
   flex-direction: row;
   min-height: 280px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 
   label {
-    width: 100%;
+    width: 40%;
+    min-width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -112,6 +120,7 @@
       width: 260px;
       border-radius: 3px;
       height: 115px;
+      margin-bottom: 5px;
     }
   }
 

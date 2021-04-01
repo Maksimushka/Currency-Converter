@@ -29,9 +29,10 @@ export const CurrencyView = (props: CurrencyViewType) => {
                 {
                     currencies.map(el => {
                         return <CurrencyBlock
+                            currentCurrency={currentCurrency}
                             changeCurrentCurrency={changeCurrentCurrency}
                             key={`${el.ID} ${el.NumCode}`}
-                            difference={el.Previous}
+                            prevValue={el.Previous}
                             name={el.CharCode}
                             value={el.Value}/>
                     })
