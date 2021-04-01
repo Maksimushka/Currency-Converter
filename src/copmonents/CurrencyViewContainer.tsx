@@ -8,17 +8,27 @@ export const CurrencyViewContainer = () => {
     const {
         isBuying,
         currencies,
-        currentCurrency
+        currentCurrency,
+        currentCountRUB,
+        currentCountCurrency
     } = useSelector((state:StoreRootType) => state.currency)
+    debugger
+    const currencyRate = currencies.find(el => el.CharCode === currentCurrency)
 
     const changeIsBuying = (value: boolean) => dispatch(setIsBuyingAC(value))
     const changeCurrentCurrency = (value: string) => dispatch(setCurrentCurrency(value))
+    const changeFieldValue = () => {
+
+    }
 
     return (
         <CurrencyView
+            currentCountRUB={currentCountRUB}
+            currentCountCurrency={currentCountCurrency}
             currentCurrency={currentCurrency}
             currencies={currencies}
             isBuying={isBuying}
+            currencyRate={currencyRate!.Value}
             changeCurrentCurrency={changeCurrentCurrency}
             changeIsBuying={changeIsBuying} />
     )

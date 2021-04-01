@@ -2,8 +2,8 @@ import React from 'react';
 
 export const CurrencyBlock = (props: any) => {
     const {name, value, difference, changeCurrentCurrency} = props
-    const diff = Math.ceil((value - difference)*1000)/1000
-    const finalValue = Math.ceil((value)*1000)/1000
+    const diff: number = +(value - difference).toFixed(2)
+    const finalValue = +value.toFixed(2)
     const diffStyle = `${diff > 0 ? 'up' : 'down'}`
     return (
         <div onClick={() => changeCurrentCurrency(name)} className='currency-block'>

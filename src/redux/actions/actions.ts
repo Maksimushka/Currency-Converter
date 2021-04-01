@@ -7,6 +7,7 @@ export enum ActionsTypes {
     SET_ISBUYING = 'SET_ISBUYING',
     SET_CURRENT_CURRENCY = 'SET_CURRENT_CURRENCY',
     CHANGE_FIELD_VALUE = 'SET_FIELD_VALUE',
+    SET_LOADING = 'SET_LOADING',
 }
 export type setIsBuyingACType = {
     type: ActionsTypes.SET_ISBUYING,
@@ -28,7 +29,11 @@ export type changeFieldValueACType = {
 
     }
 }
-export type CurrencyActionsType = setIsBuyingACType | setCurrenciesACType | setCurrentCurrencyACType | changeFieldValueACType
+export type setLoadingACType = {
+    type: ActionsTypes.SET_LOADING
+    payload: boolean
+}
+export type CurrencyActionsType = setIsBuyingACType | setCurrenciesACType | setCurrentCurrencyACType | changeFieldValueACType | setLoadingACType
 
 // ACTION CREATORS
 export const setIsBuyingAC = (isBuying: boolean): setIsBuyingACType => ({
@@ -51,11 +56,16 @@ export const changeFieldValueAC = (): changeFieldValueACType => ({
 
     }
 })
+export const setLoadingAC = (value: boolean): setLoadingACType => ({
+    type: ActionsTypes.SET_LOADING,
+    payload: value
+})
 
 // THUNK CREATORS
 export const getCurrencies = () => (dispatch: any) => {
-    const currencies = getData().then(resp => {
+    dispatch(setLoadingAC(true))
+    getData().then(resp => {
         dispatch(setCurrenciesAC([resp.USD, resp.EUR, resp.GBP, resp.CHF, resp.CNY]))
+        dispatch(setLoadingAC(false))
     })
-    console.log(currencies)
 }

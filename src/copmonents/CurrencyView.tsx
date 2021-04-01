@@ -7,12 +7,22 @@ type CurrencyViewType = {
     currentCurrency: string
     currencies: currency[]
     isBuying: boolean
+    currentCountRUB: string
+    currentCountCurrency: string
+    currencyRate: number
     changeIsBuying: (value: boolean) => void
     changeCurrentCurrency: (value: string) => void
 }
 
 export const CurrencyView = (props: CurrencyViewType) => {
-    const {isBuying, changeIsBuying, currencies, currentCurrency, changeCurrentCurrency} = props
+    const {isBuying, changeIsBuying, currencies,
+        currentCurrency, changeCurrentCurrency, currentCountRUB,
+        currencyRate
+    } = props
+
+    const finalCurrencyRate = +currencyRate.toFixed(2)
+    const finalRURRate = +(1 / currencyRate).toFixed(4)
+
     return (
         <>
             <div className='currency'>
@@ -36,22 +46,26 @@ export const CurrencyView = (props: CurrencyViewType) => {
                     isBuying
                         ? <>
                             <label htmlFor="">
-                                <span>You give RUB</span>
-                                <input type="text"/>
+                                <span>You give RUR</span>
+                                <input value={currentCountRUB} type="text"/>
+                                <span>1 RUR = {finalRURRate} {currentCurrency}</span>
                             </label>
                             <label htmlFor="">
                                 <span>You get {currentCurrency}</span>
                                 <input type="text"/>
+                                <span>1 {currentCurrency} = {finalCurrencyRate} RUR</span>
                             </label>
                         </>
                         : <>
                             <label htmlFor="">
                                 <span>You give {currentCurrency}</span>
                                 <input type="text"/>
+                                <span>1 {currentCurrency} = {finalCurrencyRate} RUR</span>
                             </label>
                             <label htmlFor="">
                                 <span>You get RUB</span>
-                                <input type="text"/>
+                                <input value={currentCountRUB} type="text"/>
+                                <span>1 RUB = {finalRURRate} {currentCurrency}</span>
                             </label>
                         </>
                 }

@@ -15,9 +15,11 @@ export type CurrencyReducerStateType = {
     currentCountRUB: string
     currentCountCurrency: string
     currentCurrency: string
+    loading: boolean
 }
 
 const initialState: CurrencyReducerStateType = {
+    loading: true,
     currencies: [],
     isBuying: true,
     currentCountRUB: '',
@@ -43,6 +45,18 @@ export const currencyReducer = (state = initialState, action: CurrencyActionsTyp
             return {
                 ...state,
                 currentCurrency: action.payload
+            }
+        }
+        case ActionsTypes.CHANGE_FIELD_VALUE: {
+            return {
+                ...state,
+
+            }
+        }
+        case ActionsTypes.SET_LOADING: {
+            return {
+                ...state,
+                loading: action.payload
             }
         }
         default:

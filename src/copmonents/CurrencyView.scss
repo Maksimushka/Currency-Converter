@@ -24,6 +24,7 @@
     &:hover {
       background-color: #f8efef;
     }
+
     &:active {
       background-color: white;
     }
@@ -37,9 +38,11 @@
       font-size: 16px;
       text-align: center;
     }
+
     .up {
       color: red;
     }
+
     .down {
       color: green;
     }
@@ -66,16 +69,18 @@
 
     &:hover {
       background-color: #e75a5a;
-      color:  white;
+      color: white;
     }
+
     &:active {
       background-color: white;
       color: #e75a5a;
     }
   }
+
   .active {
     background-color: #e75a5a;
-    color:  white;
+    color: white;
   }
 }
 
@@ -83,8 +88,8 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 100%;
-  flex-direction: column;
+  width: 60%;
+  flex-direction: row;
   min-height: 280px;
   margin-bottom: 20px;
 
@@ -98,14 +103,15 @@
     span {
       margin-bottom: 20px;
     }
+
     input {
-      font-size: 22px;
+      font-size: 32px;
       padding-left: 10px;
       outline: none;
       border: 1px solid black;
-      width: 60%;
-      border-radius: 10px;
-      height: 45px;
+      width: 260px;
+      border-radius: 3px;
+      height: 115px;
     }
   }
 
