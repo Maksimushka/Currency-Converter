@@ -50,7 +50,8 @@ export const currencyReducer = (state = initialState, action: CurrencyActionsTyp
         case ActionsTypes.CHANGE_FIELD_VALUE: {
             return {
                 ...state,
-
+                currentCountRUB: action.payload.amountRUR,
+                currentCountCurrency: action.payload.amountCurrency
             }
         }
         case ActionsTypes.SET_LOADING: {

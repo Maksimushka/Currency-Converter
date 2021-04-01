@@ -1,6 +1,7 @@
+import React from 'react';
 import {CurrencyView} from './CurrencyView';
 import {useDispatch, useSelector} from 'react-redux';
-import {setCurrentCurrency, setIsBuyingAC} from '../redux/actions/actions';
+import {changeFieldValueAC, setCurrentCurrency, setIsBuyingAC} from '../redux/actions/actions';
 import {StoreRootType} from '../redux/store';
 
 export const CurrencyViewContainer = () => {
@@ -12,12 +13,30 @@ export const CurrencyViewContainer = () => {
         currentCountRUB,
         currentCountCurrency
     } = useSelector((state:StoreRootType) => state.currency)
-    debugger
     const currencyRate = currencies.find(el => el.CharCode === currentCurrency)
+    const finalCurrencyRate = +currencyRate!.Value.toFixed(2)
+    const finalRurRate = +(1 / currencyRate!.Value).toFixed(4)
 
     const changeIsBuying = (value: boolean) => dispatch(setIsBuyingAC(value))
     const changeCurrentCurrency = (value: string) => dispatch(setCurrentCurrency(value))
-    const changeFieldValue = () => {
+    const changeFieldValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = e.currentTarget.value
+        if (e.currentTarget.dataset.currency) {
+            const trigger: string = e.currentTarget.dataset.currency;
+            if (trigger === 'RUR') {
+                if (value === '') {
+                    dispatch(changeFieldValueAC(value, value))
+                } else {
+                    dispatch(changeFieldValueAC(value, (+(value) / finalCurrencyRate).toFixed(2) ))
+                }
+            } else {
+                if (value === '') {
+                    dispatch(changeFieldValueAC(value, value))
+                } else {
+                    dispatch(changeFieldValueAC( (+(value) * finalCurrencyRate).toFixed(2), value))
+                }
+            }
+        }
 
     }
 
@@ -28,8 +47,10 @@ export const CurrencyViewContainer = () => {
             currentCurrency={currentCurrency}
             currencies={currencies}
             isBuying={isBuying}
-            currencyRate={currencyRate!.Value}
+            finalRurRate={finalRurRate}
+            finalCurrencyRate={finalCurrencyRate}
             changeCurrentCurrency={changeCurrentCurrency}
+            changeFieldValue={changeFieldValue}
             changeIsBuying={changeIsBuying} />
     )
 }

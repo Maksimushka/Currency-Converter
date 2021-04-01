@@ -26,7 +26,8 @@ export type setCurrentCurrencyACType = {
 export type changeFieldValueACType = {
     type: ActionsTypes.CHANGE_FIELD_VALUE
     payload: {
-
+        amountRUR: string
+        amountCurrency: string
     }
 }
 export type setLoadingACType = {
@@ -50,10 +51,11 @@ export const setCurrentCurrency = (currency: string): setCurrentCurrencyACType =
     type: ActionsTypes.SET_CURRENT_CURRENCY,
     payload: currency
 })
-export const changeFieldValueAC = (): changeFieldValueACType => ({
+export const changeFieldValueAC = (amountRUR: string, amountCurrency: string ): changeFieldValueACType => ({
     type: ActionsTypes.CHANGE_FIELD_VALUE,
     payload: {
-
+        amountRUR,
+        amountCurrency
     }
 })
 export const setLoadingAC = (value: boolean): setLoadingACType => ({
