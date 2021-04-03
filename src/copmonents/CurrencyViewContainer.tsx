@@ -12,32 +12,31 @@ export const CurrencyViewContainer = () => {
         currentCurrency,
         currentCountRUB,
         currentCountCurrency
-    } = useSelector((state:StoreRootType) => state.currency)
+    } = useSelector((state: StoreRootType) => state.currency)
     const currencyRate = currencies.find(el => el.CharCode === currentCurrency)
-    const finalCurrencyRate = +currencyRate!.Value.toFixed(2)
+    let finalCurrencyRate = +currencyRate!.Value.toFixed(2)
     const finalRurRate = +(1 / currencyRate!.Value).toFixed(4)
 
     const changeIsBuying = (value: boolean) => dispatch(setIsBuyingAC(value))
-    const changeCurrentCurrency = (value: string) => dispatch(setCurrentCurrency(value))
-    const changeFieldValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let value = e.currentTarget.value
-        if (e.currentTarget.dataset.currency) {
-            const trigger: string = e.currentTarget.dataset.currency;
-            if (trigger === 'RUR') {
-                if (value === '') {
-                    dispatch(changeFieldValueAC(value, value))
-                } else {
-                    dispatch(changeFieldValueAC(value, (+(value) / finalCurrencyRate).toFixed(2) ))
-                }
-            } else {
-                if (value === '') {
-                    dispatch(changeFieldValueAC(value, value))
-                } else {
-                    dispatch(changeFieldValueAC( (+(value) * finalCurrencyRate).toFixed(2), value))
-                }
-            }
+    const changeCurrentCurrency = (name: string, count: string) => {
+        finalCurrencyRate = +currencies.find(el => el.CharCode === name)!.Value.toFixed(2)
+        dispatch(setCurrentCurrency(name))
+        changeRurFieldValue(count)
+    }
+    const changeRurFieldValue = (value: string) => {
+        if (value === '') {
+            dispatch(changeFieldValueAC(value, value))
+        } else {
+            dispatch(changeFieldValueAC(value, (+(value) / finalCurrencyRate).toFixed(2)))
         }
+    }
 
+    const changeCurrencyFieldValue = (value: string) => {
+        if (value === '') {
+            dispatch(changeFieldValueAC(value, value))
+        } else {
+            dispatch(changeFieldValueAC((+(value) * finalCurrencyRate).toFixed(2), value))
+        }
     }
 
     return (
@@ -50,7 +49,8 @@ export const CurrencyViewContainer = () => {
             finalRurRate={finalRurRate}
             finalCurrencyRate={finalCurrencyRate}
             changeCurrentCurrency={changeCurrentCurrency}
-            changeFieldValue={changeFieldValue}
-            changeIsBuying={changeIsBuying} />
+            changeRurFieldValue={changeRurFieldValue}
+            changeCurrencyFieldValue={changeCurrencyFieldValue}
+            changeIsBuying={changeIsBuying}/>
     )
 }

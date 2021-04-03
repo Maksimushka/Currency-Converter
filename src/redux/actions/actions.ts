@@ -1,6 +1,7 @@
 // TYPES
 import {currency} from '../reducer/currency-reducer';
 import {getData} from '../../API';
+import {Dispatch} from 'redux';
 
 export enum ActionsTypes {
     SET_CURRENCIES = 'SET_CURRENCIES',
@@ -64,7 +65,7 @@ export const setLoadingAC = (value: boolean): setLoadingACType => ({
 })
 
 // THUNK CREATORS
-export const getCurrencies = () => (dispatch: any) => {
+export const getCurrencies = () => (dispatch: Dispatch) => {
     dispatch(setLoadingAC(true))
     getData().then(resp => {
         dispatch(setCurrenciesAC([resp.USD, resp.EUR, resp.GBP, resp.CHF, resp.CNY]))

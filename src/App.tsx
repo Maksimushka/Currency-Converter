@@ -10,7 +10,6 @@ function App() {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getCurrencies())
-        console.log('fsadf')
     }, [dispatch])
 
     if (loading) {

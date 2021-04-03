@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './CurrencyView.scss'
 import {CurrencyBlock} from './CurrencyBlock';
 import {currency} from '../redux/reducer/currency-reducer';
@@ -12,18 +12,37 @@ type CurrencyViewType = {
     finalCurrencyRate: number
     finalRurRate: number
     changeIsBuying: (value: boolean) => void
-    changeFieldValue: (e: React.ChangeEvent<HTMLInputElement>) => void
-    changeCurrentCurrency: (value: string) => void
+    changeRurFieldValue: (value: string) => void
+    changeCurrencyFieldValue: (value: string) => void
+    changeCurrentCurrency: (value: string, count: string) => void
 }
 
 export const CurrencyView = (props: CurrencyViewType) => {
-    const {isBuying, changeIsBuying,
+    const {
+        isBuying, changeIsBuying,
         currencies, currentCurrency,
         changeCurrentCurrency, currentCountRUB,
-        changeFieldValue, currentCountCurrency,
-        finalCurrencyRate, finalRurRate
+        currentCountCurrency, finalCurrencyRate,
+        finalRurRate, changeRurFieldValue,
+        changeCurrencyFieldValue
     } = props
 
+    const onChangeCurrencyCount = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = e.currentTarget.value
+        changeCurrencyFieldValue(value)
+    }
+    const onChangeRurCount = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = e.currentTarget.value
+        changeRurFieldValue(value)
+    }
+
+    const onChangeCurrentCurrency = (value: string) => {
+        changeCurrentCurrency(value, currentCountRUB)
+    }
+
+    const onChangeIsBuying = (bol: boolean) => {
+        changeIsBuying(bol)
+    }
 
     return (
         <>
@@ -32,7 +51,7 @@ export const CurrencyView = (props: CurrencyViewType) => {
                     currencies.map(el => {
                         return <CurrencyBlock
                             currentCurrency={currentCurrency}
-                            changeCurrentCurrency={changeCurrentCurrency}
+                            changeCurrentCurrency={onChangeCurrentCurrency}
                             key={`${el.ID} ${el.NumCode}`}
                             prevValue={el.Previous}
                             name={el.CharCode}
@@ -41,8 +60,8 @@ export const CurrencyView = (props: CurrencyViewType) => {
                 }
             </div>
             <div className='buy-sell'>
-                <button className={isBuying ? 'active' : ''} onClick={() => changeIsBuying(true)}>Buy</button>
-                <button className={isBuying ? '' : 'active'} onClick={() => changeIsBuying(false)}>Sell</button>
+                <button className={isBuying ? 'active' : ''} onClick={() => onChangeIsBuying(true)}>Buy</button>
+                <button className={isBuying ? '' : 'active'} onClick={() => onChangeIsBuying(false)}>Sell</button>
             </div>
             <div className='fields'>
                 {
@@ -50,24 +69,28 @@ export const CurrencyView = (props: CurrencyViewType) => {
                         ? <>
                             <label htmlFor="">
                                 <span>You give RUR</span>
-                                <input value={currentCountRUB} data-currency='RUR' type='number' onChange={ changeFieldValue }/>
+                                <input value={currentCountRUB} data-currency='RUR' type='number'
+                                       onChange={onChangeRurCount}/>
                                 <span>1 RUR = {finalRurRate} {currentCurrency}</span>
                             </label>
                             <label htmlFor="">
                                 <span>You get {currentCurrency}</span>
-                                <input value={ currentCountCurrency } data-currency='currency' onChange={ changeFieldValue }/>
+                                <input value={currentCountCurrency} data-currency='currency'
+                                       onChange={onChangeCurrencyCount}/>
                                 <span>1 {currentCurrency} = {finalCurrencyRate} RUR</span>
                             </label>
                         </>
                         : <>
                             <label htmlFor="">
                                 <span>You give {currentCurrency}</span>
-                                <input value={ currentCountCurrency } data-currency='currency' onChange={ changeFieldValue }/>
+                                <input value={currentCountCurrency} data-currency='currency'
+                                       onChange={onChangeCurrencyCount}/>
                                 <span>1 {currentCurrency} = {finalCurrencyRate} RUR</span>
                             </label>
                             <label htmlFor="">
                                 <span>You get RUB</span>
-                                <input value={currentCountRUB} data-currency='RUR' onChange={ changeFieldValue }/>
+                                <input value={currentCountRUB} data-currency='RUR'
+                                       onChange={onChangeRurCount}/>
                                 <span>1 RUB = {finalRurRate} {currentCurrency}</span>
                             </label>
                         </>

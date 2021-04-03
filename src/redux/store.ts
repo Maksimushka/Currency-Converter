@@ -9,3 +9,5 @@ const reducers = combineReducers({
 export const store = createStore(reducers, applyMiddleware(thunk))
 
 export type StoreRootType = ReturnType<typeof reducers>
+
+(window as any).store = store
