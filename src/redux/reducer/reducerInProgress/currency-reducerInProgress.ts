@@ -12,50 +12,52 @@ export type currency = {
 }
 export type newCurrencyReducerStateType = {
     currencies: currency[] | []
-    isBuying: boolean
-    currentCountFirstField: string
-    currentCountSecondField: string
-    currentCurrencyFirstField: string
-    currentCurrencySecondField: string
+    countFirstField: string
+    countSecondField: string
+    currencyFirstField: string
+    currencySecondField: string
     loading: boolean
 }
 
 const initialState: newCurrencyReducerStateType = {
     loading: true,
-    currencies: [],
-    isBuying: true,
-    currentCountFirstField: '',
-    currentCountSecondField: '',
-    currentCurrencyFirstField: 'RUR',
-    currentCurrencySecondField: 'USD'
+    currencies: [
+        {
+            CharCode: 'RUR',
+            Value: 0,
+            Previous: 0,
+            ID: '142',
+            Name: 'Российский рубль',
+            Nominal: 1,
+            NumCode: ''
+        }
+    ],
+    countFirstField: '',
+    countSecondField: '',
+    currencyFirstField: 'USD',
+    currencySecondField: 'RUR'
 }
 
 export const newCurrencyReducer = (state = initialState, action: CurrencyActionsTypeInProgress): newCurrencyReducerStateType => {
     switch (action.type) {
-        case ActionsTypes.SET_ISBUYING: {
-            return {
-                ...state,
-                ...action.payload
-            }
-        }
         case ActionsTypes.SET_CURRENCIES: {
             return {
                 ...state,
-                currencies: action.payload
+                currencies: [...state.currencies, ...action.payload]
             }
         }
         case ActionsTypes.SET_CURRENT_CURRENCY: {
             return {
                 ...state,
-                currentCurrencyFirstField: action.payload.currencyOfFirstField,
-                currentCurrencySecondField: action.payload.currencyOfSecondField
+                currencyFirstField: action.payload.currencyOfFirstField,
+                currencySecondField: action.payload.currencyOfSecondField
             }
         }
         case ActionsTypes.CHANGE_FIELD_VALUE: {
             return {
                 ...state,
-                currentCountFirstField: action.payload.amountFirstField,
-                currentCountSecondField: action.payload.amountSecondField
+                countFirstField: action.payload.amountFirstField,
+                countSecondField: action.payload.amountSecondField
             }
         }
         case ActionsTypes.SET_LOADING: {

@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
 import './App.scss';
-import {CurrencyViewContainer} from './copmonents/CurrencyViewContainer';
 import {getCurrencies} from './redux/actions/actions';
 import {useDispatch, useSelector} from 'react-redux';
-import {StoreRootType} from './redux/store';
+import {CurrencyContainer} from './copmonents/ConverterContainer/ConverterContainer';
+import {NewStoreRootType} from './redux/newStore';
 
 function App() {
-    const {loading} = useSelector((state: StoreRootType) => state.currency)
+    const {loading} = useSelector((state: NewStoreRootType) => state.converter)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getCurrencies())
@@ -18,7 +18,7 @@ function App() {
 
     return (
         <div className="App">
-            <CurrencyViewContainer/>
+            <CurrencyContainer/>
         </div>
     );
 }
