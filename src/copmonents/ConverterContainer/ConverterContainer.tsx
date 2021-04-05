@@ -20,36 +20,66 @@ export const CurrencyContainer = () => {
     let rateOfFirstField = currencies.find(el => el.CharCode === currencyFirstField)
     let rateOfSecondField = currencies.find(el => el.CharCode === currencySecondField)
 
-    let rateForChangeFirstFieldValue: number
-    rateForChangeFirstFieldValue = rateOfFirstField!.Value / rateOfSecondField!.Value
+    let rateForChangeValue: number
+    rateForChangeValue = rateOfFirstField!.Value / rateOfSecondField!.Value
+
     if (currencyFirstField === 'RUR') {
-        rateForChangeFirstFieldValue = 1 / rateOfSecondField!.Value
+        rateForChangeValue = 1 / rateOfSecondField!.Value
     }
     if (currencySecondField === 'RUR') {
-        rateForChangeFirstFieldValue = rateOfFirstField!.Value
+        rateForChangeValue = rateOfFirstField!.Value
+    }
+    if (rateOfFirstField!.CharCode === 'RUR' || rateOfSecondField!.CharCode === 'RUR') {
+        rateForChangeValue = 1
     }
 
-    const changeCurrencyOfFirstField = (currencyOfFirstField: string) => {
-        // finalCurrencyRate = +currencies.find(el => el.CharCode === currencyOfSecondField)!.Value.toFixed(2)
+    const changeCurrencyOfFirstField = (currencyOfFirstField: string, value: string) => {
+        debugger
+        rateOfFirstField = currencies.find(el => el.CharCode === currencyOfFirstField)
+        rateForChangeValue = rateOfFirstField!.Value / rateOfSecondField!.Value
+        if (rateOfFirstField!.CharCode === 'RUR') {
+            rateForChangeValue = 1 / rateOfSecondField!.Value
+        }
+        if (rateOfSecondField!.CharCode === 'RUR') {
+            rateForChangeValue = rateOfFirstField!.Value
+        }
+        if (rateOfFirstField!.CharCode === 'RUR' || rateOfSecondField!.CharCode === 'RUR') {
+            rateForChangeValue = 1
+        }
         dispatch(setCurrentCurrency(currencyOfFirstField, currencySecondField))
+        changeFirstFieldValue(value)
     }
-    const changeCurrencyOfSecondField = (currencyOfSecondField: string) => {
-        // finalCurrencyRate = +currencies.find(el => el.CharCode === currencyOfSecondField)!.Value.toFixed(2)
+
+    const changeCurrencyOfSecondField = (currencyOfSecondField: string, value: string) => {
+        debugger
+        rateOfSecondField = currencies.find(el => el.CharCode === currencyOfSecondField)
+        rateForChangeValue = rateOfFirstField!.Value / rateOfSecondField!.Value
+        if (rateOfFirstField!.CharCode === 'RUR') {
+            rateForChangeValue = 1 / rateOfSecondField!.Value
+        }
+        if (rateOfSecondField!.CharCode === 'RUR') {
+            rateForChangeValue = rateOfFirstField!.Value
+        }
+        if (rateOfFirstField!.CharCode === 'RUR' || rateOfSecondField!.CharCode === 'RUR') {
+            rateForChangeValue = 1
+        }
         dispatch(setCurrentCurrency(currencyFirstField, currencyOfSecondField))
+        changeFirstFieldValue(value)
     }
+
 
     const changeFirstFieldValue = (value: string) => {
         if (value === '') {
             dispatch(changeFieldValueAC(value, value))
         } else {
-            dispatch(changeFieldValueAC(value, (+value * rateForChangeFirstFieldValue).toFixed(2)))
+            dispatch(changeFieldValueAC(value, (+value * rateForChangeValue).toFixed(2)))
         }
     }
     const changeSecondFieldValue = (value: string) => {
         if (value === '') {
             dispatch(changeFieldValueAC(value, value))
         } else {
-            dispatch(changeFieldValueAC((+value / rateForChangeFirstFieldValue).toFixed(2), value))
+            dispatch(changeFieldValueAC((+value / rateForChangeValue).toFixed(2), value))
         }
     }
 

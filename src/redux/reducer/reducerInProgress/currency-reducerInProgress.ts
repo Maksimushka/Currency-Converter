@@ -34,8 +34,8 @@ const initialState: newCurrencyReducerStateType = {
     ],
     countFirstField: '',
     countSecondField: '',
-    currencyFirstField: 'USD',
-    currencySecondField: 'RUR'
+    currencyFirstField: 'RUR',
+    currencySecondField: 'USD'
 }
 
 export const newCurrencyReducer = (state = initialState, action: CurrencyActionsTypeInProgress): newCurrencyReducerStateType => {

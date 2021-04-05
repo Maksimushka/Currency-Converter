@@ -5,8 +5,8 @@ import Currencies from './Currencies';
 
 type ConverterPropsType = {
 
-    changeCurrencyOfFirstField: (currencyOfFirstField: string) => void
-    changeCurrencyOfSecondField: (currencyOfSecondField: string) => void
+    changeCurrencyOfFirstField: (currencyOfFirstField: string, value: string) => void
+    changeCurrencyOfSecondField: (currencyOfSecondField: string, value: string) => void
     currencies: currency[]
     currencyFirstField: string
     currencySecondField: string
@@ -36,9 +36,12 @@ export const Converter = (props: ConverterPropsType) => {
         changeSecondFieldValue(value)
     }
 
-    // const onChangeCurrentCurrency = (value: string) => {
-    //     changeCurrentCurrency(value, currentCountRUB)
-    // }
+    const onChangeCurrencyFirstField = (value: string) => {
+        changeCurrencyOfFirstField(value, countFirstField)
+    }
+    const onChangeCurrencySecondField = (value: string) => {
+        changeCurrencyOfSecondField(value, countFirstField)
+    }
 
     return (
         <>
@@ -48,7 +51,7 @@ export const Converter = (props: ConverterPropsType) => {
                         ? <>
                             <div>
                                 <Currencies
-                                    changeCurrency={changeCurrencyOfFirstField}
+                                    changeCurrency={onChangeCurrencyFirstField}
                                     currentCurrency={currencyFirstField}
                                     currencies={currencies}/>
                                 <label htmlFor="">
@@ -60,7 +63,7 @@ export const Converter = (props: ConverterPropsType) => {
                             <button className={'active'} onClick={() => setIsSwap(!isSwap)}>Swap</button>
                             <div>
                                 <Currencies
-                                    changeCurrency={changeCurrencyOfSecondField}
+                                    changeCurrency={onChangeCurrencySecondField}
                                     currentCurrency={currencySecondField}
                                     currencies={currencies}/>
                                 <label htmlFor="">
@@ -74,7 +77,7 @@ export const Converter = (props: ConverterPropsType) => {
                         : <>
                             <div>
                                 <Currencies
-                                    changeCurrency={changeCurrencyOfSecondField}
+                                    changeCurrency={onChangeCurrencySecondField}
                                     currentCurrency={currencySecondField}
                                     currencies={currencies}/>
                                 <label htmlFor="">
@@ -86,7 +89,7 @@ export const Converter = (props: ConverterPropsType) => {
                             <button className={'active'} onClick={() => setIsSwap(!isSwap)}>Swap</button>
                             <div>
                                 <Currencies
-                                    changeCurrency={changeCurrencyOfFirstField}
+                                    changeCurrency={onChangeCurrencyFirstField}
                                     currentCurrency={currencyFirstField}
                                     currencies={currencies}/>
                                 <label htmlFor="">
