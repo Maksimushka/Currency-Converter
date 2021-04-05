@@ -1,0 +1,32 @@
+$redColor: #e75a5a;
+
+.currencies {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  height: 60px;
+  width: 320px;
+
+  .currencies-block {
+    padding-top: 3px;
+    height: 25px;
+    text-align: center;
+    list-style: none;
+    width: 45px;
+    cursor: pointer;
+    border: 1px solid #cdcdcd;
+    background-color: white;
+    color: black;
+
+    &:hover {
+      background-color: $redColor;
+      color: white;
+    }
+  }
+
+  .active {
+    background-color: $redColor;
+    color: white;
+  }
+}

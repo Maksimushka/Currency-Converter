@@ -60,41 +60,6 @@ $redColor: #e75a5a;
   }
 }
 
-.buy-sell {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 50%;
-  min-width: 260px;
-  height: 150px;
-
-  button {
-    width: 90px;
-    height: 35px;
-    border-radius: 7px;
-    cursor: pointer;
-    border: 1px solid $redColor;
-    background-color: white;
-    color: $redColor;
-    font-size: 17px;
-
-    &:hover {
-      background-color: $redColor;
-      color: white;
-    }
-
-    &:active {
-      background-color: white;
-      color: $redColor;
-    }
-  }
-
-  .active {
-    background-color: $redColor;
-    color: white;
-  }
-}
-
 .fields {
   display: flex;
   justify-content: space-around;
@@ -127,6 +92,32 @@ $redColor: #e75a5a;
       height: 115px;
       margin-bottom: 5px;
     }
+  }
+
+  button {
+    width: 90px;
+    height: 35px;
+    border-radius: 7px;
+    cursor: pointer;
+    border: 1px solid $redColor;
+    background-color: white;
+    color: $redColor;
+    font-size: 17px;
+
+    &:hover {
+      background-color: $redColor;
+      color: white;
+    }
+
+    &:active {
+      background-color: white;
+      color: $redColor;
+    }
+  }
+
+  .active {
+    background-color: $redColor;
+    color: white;
   }
 
 }

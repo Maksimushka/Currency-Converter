@@ -7,7 +7,6 @@ import {Provider} from 'react-redux';
 import {newStore} from './redux/newStore';
 
 ReactDOM.render(
-
       <Provider store={newStore}>
           <App />
       </Provider>,

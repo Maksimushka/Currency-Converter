@@ -2,7 +2,7 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {NewStoreRootType} from '../../redux/newStore';
 import {
-    changeFieldValueAC,
+    changeFieldValueAC, setCurrentCurrency,
 } from '../../redux/reducer/reducerInProgress/actionsInProgress';
 import {Converter} from './Converter';
 
@@ -22,20 +22,22 @@ export const CurrencyContainer = () => {
 
     let rateForChangeFirstFieldValue: number
     rateForChangeFirstFieldValue = rateOfFirstField!.Value / rateOfSecondField!.Value
-
     if (currencyFirstField === 'RUR') {
         rateForChangeFirstFieldValue = 1 / rateOfSecondField!.Value
     }
-
     if (currencySecondField === 'RUR') {
         rateForChangeFirstFieldValue = rateOfFirstField!.Value
     }
 
-    // const changeCurrentCurrency = (currencyOfFirstField: string, currencyOfSecondField: string, count: string) => {
-    //     finalCurrencyRate = +currencies.find(el => el.CharCode === currencyOfSecondField)!.Value.toFixed(2)
-    //     dispatch(setCurrentCurrency(currencyOfFirstField, currencyOfSecondField))
-    //     changeRurFieldValue(count)
-    // }
+    const changeCurrencyOfFirstField = (currencyOfFirstField: string) => {
+        // finalCurrencyRate = +currencies.find(el => el.CharCode === currencyOfSecondField)!.Value.toFixed(2)
+        dispatch(setCurrentCurrency(currencyOfFirstField, currencySecondField))
+    }
+    const changeCurrencyOfSecondField = (currencyOfSecondField: string) => {
+        // finalCurrencyRate = +currencies.find(el => el.CharCode === currencyOfSecondField)!.Value.toFixed(2)
+        dispatch(setCurrentCurrency(currencyFirstField, currencyOfSecondField))
+    }
+
     const changeFirstFieldValue = (value: string) => {
         if (value === '') {
             dispatch(changeFieldValueAC(value, value))
@@ -43,7 +45,6 @@ export const CurrencyContainer = () => {
             dispatch(changeFieldValueAC(value, (+value * rateForChangeFirstFieldValue).toFixed(2)))
         }
     }
-
     const changeSecondFieldValue = (value: string) => {
         if (value === '') {
             dispatch(changeFieldValueAC(value, value))
@@ -54,6 +55,8 @@ export const CurrencyContainer = () => {
 
     return (
         <Converter
+            changeCurrencyOfSecondField={changeCurrencyOfSecondField}
+            changeCurrencyOfFirstField={changeCurrencyOfFirstField}
             changeFirstFieldValue={changeFirstFieldValue}
             currencies={currencies}
             countFirstField={countFirstField}

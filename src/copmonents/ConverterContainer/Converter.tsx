@@ -1,8 +1,12 @@
 import React, {useState} from 'react';
 import './../CurrencyView.scss'
 import {currency} from '../../redux/reducer/reducerInProgress/currency-reducerInProgress';
+import Currencies from './Currencies';
+
 type ConverterPropsType = {
 
+    changeCurrencyOfFirstField: (currencyOfFirstField: string) => void
+    changeCurrencyOfSecondField: (currencyOfSecondField: string) => void
     currencies: currency[]
     currencyFirstField: string
     currencySecondField: string
@@ -17,7 +21,8 @@ export const Converter = (props: ConverterPropsType) => {
         changeFirstFieldValue, changeSecondFieldValue,
         currencies, countFirstField,
         countSecondField, currencyFirstField,
-        currencySecondField
+        currencySecondField, changeCurrencyOfFirstField,
+        changeCurrencyOfSecondField
     } = props
 
     const [isSwap, setIsSwap] = useState(true)
@@ -37,49 +42,59 @@ export const Converter = (props: ConverterPropsType) => {
 
     return (
         <>
-            <div className='currency'>
-                {/*{*/}
-                {/*    currencies.map(el => {*/}
-                {/*        return <CurrencyBlock*/}
-                {/*            currentCurrency={currentCurrency}*/}
-                {/*            changeCurrentCurrency={onChangeCurrentCurrency}*/}
-                {/*            key={`${el.ID} ${el.NumCode}`}*/}
-                {/*            prevValue={el.Previous}*/}
-                {/*            name={el.CharCode}*/}
-                {/*            value={el.Value}/>*/}
-                {/*    })*/}
-                {/*}*/}
-            </div>
-            <div className='buy-sell'>
-                <button className={isSwap ? 'active' : ''} onClick={() => setIsSwap(true)}>Buy</button>
-                <button className={isSwap ? '' : 'active'} onClick={() => setIsSwap(false)}>Sell</button>
-            </div>
             <div className='fields'>
                 {
                     isSwap
                         ? <>
-                            <label htmlFor="">
-                                <span>You give {currencyFirstField}</span>
-                                <input value={countFirstField} onChange={onChangeFirstField}/>
-                                {/*<span>1 RUR = {finalRurRate} {currentCurrency}</span>*/}
-                            </label>
-                            <label htmlFor="">
-                                <span>You get {currencySecondField}</span>
-                                <input value={countSecondField} onChange={onChangeSecondField}/>
-                                {/*<span>1 {currentCurrency} = {finalCurrencyRate} RUR</span>*/}
-                            </label>
+                            <div>
+                                <Currencies
+                                    changeCurrency={changeCurrencyOfFirstField}
+                                    currentCurrency={currencyFirstField}
+                                    currencies={currencies}/>
+                                <label htmlFor="">
+                                    <span>You give {currencyFirstField}</span>
+                                    <input value={countFirstField} onChange={onChangeFirstField}/>
+                                    {/*<span>1 RUR = {finalRurRate} {currentCurrency}</span>*/}
+                                </label>
+                            </div>
+                            <button className={'active'} onClick={() => setIsSwap(!isSwap)}>Swap</button>
+                            <div>
+                                <Currencies
+                                    changeCurrency={changeCurrencyOfSecondField}
+                                    currentCurrency={currencySecondField}
+                                    currencies={currencies}/>
+                                <label htmlFor="">
+                                    <span>You get {currencySecondField}</span>
+                                    <input value={countSecondField} onChange={onChangeSecondField}/>
+                                    {/*<span>1 {currentCurrency} = {finalCurrencyRate} RUR</span>*/}
+                                </label>
+                            </div>
+
                         </>
                         : <>
-                            <label htmlFor="">
-                                <span>You give {currencySecondField}</span>
-                                <input value={countSecondField} onChange={onChangeSecondField}/>
-                                {/*<span>1 {currentCurrency} = {finalCurrencyRate} RUR</span>*/}
-                            </label>
-                            <label htmlFor="">
-                                <span>You get {currencyFirstField}</span>
-                                <input value={countFirstField} onChange={onChangeFirstField}/>
-                                {/*<span>1 RUB = {finalRurRate} {currentCurrency}</span>*/}
-                            </label>
+                            <div>
+                                <Currencies
+                                    changeCurrency={changeCurrencyOfSecondField}
+                                    currentCurrency={currencySecondField}
+                                    currencies={currencies}/>
+                                <label htmlFor="">
+                                    <span>You give {currencySecondField}</span>
+                                    <input value={countSecondField} onChange={onChangeSecondField}/>
+                                    {/*<span>1 {currentCurrency} = {finalCurrencyRate} RUR</span>*/}
+                                </label>
+                            </div>
+                            <button className={'active'} onClick={() => setIsSwap(!isSwap)}>Swap</button>
+                            <div>
+                                <Currencies
+                                    changeCurrency={changeCurrencyOfFirstField}
+                                    currentCurrency={currencyFirstField}
+                                    currencies={currencies}/>
+                                <label htmlFor="">
+                                    <span>You get {currencyFirstField}</span>
+                                    <input value={countFirstField} onChange={onChangeFirstField}/>
+                                    {/*<span>1 RUB = {finalRurRate} {currentCurrency}</span>*/}
+                                </label>
+                            </div>
                         </>
                 }
 
