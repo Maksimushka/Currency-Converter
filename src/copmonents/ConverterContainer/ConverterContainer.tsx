@@ -29,12 +29,11 @@ export const CurrencyContainer = () => {
     if (currencySecondField === 'RUR') {
         rateForChangeValue = rateOfFirstField!.Value
     }
-    if (rateOfFirstField!.CharCode === 'RUR' || rateOfSecondField!.CharCode === 'RUR') {
+    if (rateOfFirstField!.CharCode === 'RUR' && rateOfSecondField!.CharCode === 'RUR') {
         rateForChangeValue = 1
     }
 
     const changeCurrencyOfFirstField = (currencyOfFirstField: string, value: string) => {
-        debugger
         rateOfFirstField = currencies.find(el => el.CharCode === currencyOfFirstField)
         rateForChangeValue = rateOfFirstField!.Value / rateOfSecondField!.Value
         if (rateOfFirstField!.CharCode === 'RUR') {
@@ -43,7 +42,7 @@ export const CurrencyContainer = () => {
         if (rateOfSecondField!.CharCode === 'RUR') {
             rateForChangeValue = rateOfFirstField!.Value
         }
-        if (rateOfFirstField!.CharCode === 'RUR' || rateOfSecondField!.CharCode === 'RUR') {
+        if (rateOfFirstField!.CharCode === 'RUR' && rateOfSecondField!.CharCode === 'RUR') {
             rateForChangeValue = 1
         }
         dispatch(setCurrentCurrency(currencyOfFirstField, currencySecondField))
@@ -51,7 +50,6 @@ export const CurrencyContainer = () => {
     }
 
     const changeCurrencyOfSecondField = (currencyOfSecondField: string, value: string) => {
-        debugger
         rateOfSecondField = currencies.find(el => el.CharCode === currencyOfSecondField)
         rateForChangeValue = rateOfFirstField!.Value / rateOfSecondField!.Value
         if (rateOfFirstField!.CharCode === 'RUR') {
@@ -60,7 +58,7 @@ export const CurrencyContainer = () => {
         if (rateOfSecondField!.CharCode === 'RUR') {
             rateForChangeValue = rateOfFirstField!.Value
         }
-        if (rateOfFirstField!.CharCode === 'RUR' || rateOfSecondField!.CharCode === 'RUR') {
+        if (rateOfFirstField!.CharCode === 'RUR' && rateOfSecondField!.CharCode === 'RUR') {
             rateForChangeValue = 1
         }
         dispatch(setCurrentCurrency(currencyFirstField, currencyOfSecondField))
