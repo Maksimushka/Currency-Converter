@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
 import './App.scss';
-import {getCurrencies} from './redux/actions/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {CurrencyContainer} from './copmonents/ConverterContainer/ConverterContainer';
-import {NewStoreRootType} from './redux/newStore';
+import {getCurrencies} from './redux/actions/actions';
+import {storeRootType} from './redux/store';
 
 function App() {
-    const {loading} = useSelector((state: NewStoreRootType) => state.converter)
+    const {loading} = useSelector((state: storeRootType) => state.converter)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getCurrencies())

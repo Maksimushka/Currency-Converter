@@ -1,5 +1,4 @@
-import {ActionsTypes} from '../../actions/actions';
-import {CurrencyActionsTypeInProgress} from './actionsInProgress';
+import {ActionsTypes, CurrencyActionsTypeInProgress} from '../actions/actions';
 
 export type currency = {
     CharCode: string
@@ -38,7 +37,7 @@ const initialState: newCurrencyReducerStateType = {
     currencySecondField: 'USD'
 }
 
-export const newCurrencyReducer = (state = initialState, action: CurrencyActionsTypeInProgress): newCurrencyReducerStateType => {
+export const converterReducer = (state = initialState, action: CurrencyActionsTypeInProgress): newCurrencyReducerStateType => {
     switch (action.type) {
         case ActionsTypes.SET_CURRENCIES: {
             return {

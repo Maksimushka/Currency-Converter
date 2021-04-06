@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './../CurrencyView.scss'
-import {currency} from '../../redux/reducer/reducerInProgress/currency-reducerInProgress';
+import {currency} from '../../redux/reducer/converter-reducer';
 import Currencies from './Currencies';
 
 type ConverterPropsType = {

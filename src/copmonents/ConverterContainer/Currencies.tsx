@@ -1,5 +1,5 @@
 import React from 'react';
-import {currency} from '../../redux/reducer/reducerInProgress/currency-reducerInProgress';
+import {currency} from '../../redux/reducer/converter-reducer';
 import './Converter.scss'
 
 type CurrenciesPropsType = {

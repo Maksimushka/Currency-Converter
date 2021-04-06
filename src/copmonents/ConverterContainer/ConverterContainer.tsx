@@ -1,10 +1,10 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {NewStoreRootType} from '../../redux/newStore';
 import {
     changeFieldValueAC, setCurrentCurrency,
-} from '../../redux/reducer/reducerInProgress/actionsInProgress';
+} from '../../redux/actions/actions';
 import {Converter} from './Converter';
+import {storeRootType} from '../../redux/store';
 
 
 export const CurrencyContainer = () => {
@@ -15,7 +15,7 @@ export const CurrencyContainer = () => {
         currencySecondField,
         countFirstField,
         countSecondField,
-    } = useSelector((state: NewStoreRootType) => state.converter)
+    } = useSelector((state: storeRootType) => state.converter)
 
     // Поиск объектов валюты
     let currencyObjectOfFirstField = currencies.find(el => el.CharCode === currencyFirstField)
