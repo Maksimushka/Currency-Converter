@@ -17,55 +17,47 @@ export const CurrencyContainer = () => {
         countSecondField,
     } = useSelector((state: NewStoreRootType) => state.converter)
 
-    let rateOfFirstField = currencies.find(el => el.CharCode === currencyFirstField)
-    let rateOfSecondField = currencies.find(el => el.CharCode === currencySecondField)
+    // Поиск объектов валюты
+    let currencyObjectOfFirstField = currencies.find(el => el.CharCode === currencyFirstField)
+    let currencyObjectOfSecondField = currencies.find(el => el.CharCode === currencySecondField)
 
-    let rateForChangeValue: number
-    rateForChangeValue = rateOfFirstField!.Value / rateOfSecondField!.Value
+    // Здесь вычилсяется значение, которое далее используется для ковертации
+    let rateForChangeValue = currencyObjectOfFirstField!.Value / currencyObjectOfSecondField!.Value
+    let rateForSecondField =  currencyObjectOfSecondField!.Value / currencyObjectOfFirstField!.Value
 
+    // Проверка того, является ли валюта рублём
     if (currencyFirstField === 'RUR') {
-        rateForChangeValue = 1 / rateOfSecondField!.Value
+        rateForChangeValue = 1 / currencyObjectOfSecondField!.Value
+        rateForSecondField = currencyObjectOfSecondField!.Value
     }
     if (currencySecondField === 'RUR') {
-        rateForChangeValue = rateOfFirstField!.Value
+        rateForChangeValue = currencyObjectOfFirstField!.Value
+        rateForSecondField = 1 / currencyObjectOfFirstField!.Value
     }
-    if (rateOfFirstField!.CharCode === 'RUR' && rateOfSecondField!.CharCode === 'RUR') {
+    if (currencyObjectOfFirstField!.CharCode === 'RUR' && currencyObjectOfSecondField!.CharCode === 'RUR') {
         rateForChangeValue = 1
+        rateForSecondField = 1
     }
 
-    const changeCurrencyOfFirstField = (currencyOfFirstField: string, value: string) => {
-        rateOfFirstField = currencies.find(el => el.CharCode === currencyOfFirstField)
-        rateForChangeValue = rateOfFirstField!.Value / rateOfSecondField!.Value
-        if (rateOfFirstField!.CharCode === 'RUR') {
-            rateForChangeValue = 1 / rateOfSecondField!.Value
+    // Функция для смены валюты и пересчёта значение, в соответствии с новой валютой. Также присутствует проверка на 'рубль'
+    const changeCurrency = (currencyOfFirstField: string, currencyOfSecondField: string, value: string) => {
+        currencyObjectOfFirstField = currencies.find(el => el.CharCode === currencyOfFirstField)
+        currencyObjectOfSecondField = currencies.find(el => el.CharCode === currencyOfSecondField)
+        rateForChangeValue = currencyObjectOfFirstField!.Value / currencyObjectOfSecondField!.Value
+        if (currencyObjectOfFirstField!.CharCode === 'RUR') {
+            rateForChangeValue = 1 / currencyObjectOfSecondField!.Value
         }
-        if (rateOfSecondField!.CharCode === 'RUR') {
-            rateForChangeValue = rateOfFirstField!.Value
+        if (currencyObjectOfSecondField!.CharCode === 'RUR') {
+            rateForChangeValue = currencyObjectOfFirstField!.Value
         }
-        if (rateOfFirstField!.CharCode === 'RUR' && rateOfSecondField!.CharCode === 'RUR') {
+        if (currencyObjectOfFirstField!.CharCode === 'RUR' && currencyObjectOfSecondField!.CharCode === 'RUR') {
             rateForChangeValue = 1
         }
-        dispatch(setCurrentCurrency(currencyOfFirstField, currencySecondField))
+        dispatch(setCurrentCurrency(currencyOfFirstField, currencyOfSecondField))
         changeFirstFieldValue(value)
     }
 
-    const changeCurrencyOfSecondField = (currencyOfSecondField: string, value: string) => {
-        rateOfSecondField = currencies.find(el => el.CharCode === currencyOfSecondField)
-        rateForChangeValue = rateOfFirstField!.Value / rateOfSecondField!.Value
-        if (rateOfFirstField!.CharCode === 'RUR') {
-            rateForChangeValue = 1 / rateOfSecondField!.Value
-        }
-        if (rateOfSecondField!.CharCode === 'RUR') {
-            rateForChangeValue = rateOfFirstField!.Value
-        }
-        if (rateOfFirstField!.CharCode === 'RUR' && rateOfSecondField!.CharCode === 'RUR') {
-            rateForChangeValue = 1
-        }
-        dispatch(setCurrentCurrency(currencyFirstField, currencyOfSecondField))
-        changeFirstFieldValue(value)
-    }
-
-
+    // Эти функции отвечают за конвертацию валюты
     const changeFirstFieldValue = (value: string) => {
         if (value === '') {
             dispatch(changeFieldValueAC(value, value))
@@ -83,8 +75,9 @@ export const CurrencyContainer = () => {
 
     return (
         <Converter
-            changeCurrencyOfSecondField={changeCurrencyOfSecondField}
-            changeCurrencyOfFirstField={changeCurrencyOfFirstField}
+            rateSecondCurrency={rateForSecondField}
+            rateFirstCurrency={rateForChangeValue}
+            changeCurrency={changeCurrency}
             changeFirstFieldValue={changeFirstFieldValue}
             currencies={currencies}
             countFirstField={countFirstField}

@@ -4,9 +4,9 @@ import {currency} from '../../redux/reducer/reducerInProgress/currency-reducerIn
 import Currencies from './Currencies';
 
 type ConverterPropsType = {
-
-    changeCurrencyOfFirstField: (currencyOfFirstField: string, value: string) => void
-    changeCurrencyOfSecondField: (currencyOfSecondField: string, value: string) => void
+    rateFirstCurrency: number
+    rateSecondCurrency: number
+    changeCurrency: (currencyOfFirstField: string, currencyOfSecondField: string, value: string) => void
     currencies: currency[]
     currencyFirstField: string
     currencySecondField: string
@@ -21,8 +21,8 @@ export const Converter = (props: ConverterPropsType) => {
         changeFirstFieldValue, changeSecondFieldValue,
         currencies, countFirstField,
         countSecondField, currencyFirstField,
-        currencySecondField, changeCurrencyOfFirstField,
-        changeCurrencyOfSecondField
+        currencySecondField, changeCurrency,
+        rateFirstCurrency, rateSecondCurrency
     } = props
 
     const [isSwap, setIsSwap] = useState(true)
@@ -36,13 +36,15 @@ export const Converter = (props: ConverterPropsType) => {
         changeSecondFieldValue(value)
     }
 
-    const onChangeCurrencyFirstField = (value: string) => {
-        changeCurrencyOfFirstField(value, countFirstField)
+    const onChangeCurrencyFirstField = (currencyOfFirstField: string) => {
+        changeCurrency(currencyOfFirstField, currencySecondField ,countFirstField)
     }
-    const onChangeCurrencySecondField = (value: string) => {
-        changeCurrencyOfSecondField(value, countFirstField)
+    const onChangeCurrencySecondField = (currencyOfSecondField: string) => {
+        changeCurrency(currencyFirstField, currencyOfSecondField, countFirstField)
     }
 
+    let rateForFirstField = rateFirstCurrency.toFixed(3)
+    let rateForSecondField = rateSecondCurrency.toFixed(3)
     return (
         <>
             <div className='fields'>
@@ -57,7 +59,7 @@ export const Converter = (props: ConverterPropsType) => {
                                 <label htmlFor="">
                                     <span>You give {currencyFirstField}</span>
                                     <input value={countFirstField} onChange={onChangeFirstField}/>
-                                    {/*<span>1 RUR = {finalRurRate} {currentCurrency}</span>*/}
+                                    <span>1 {currencyFirstField} = {rateForFirstField} {currencySecondField}</span>
                                 </label>
                             </div>
                             <button className={'active'} onClick={() => setIsSwap(!isSwap)}>Swap</button>
@@ -69,7 +71,7 @@ export const Converter = (props: ConverterPropsType) => {
                                 <label htmlFor="">
                                     <span>You get {currencySecondField}</span>
                                     <input value={countSecondField} onChange={onChangeSecondField}/>
-                                    {/*<span>1 {currentCurrency} = {finalCurrencyRate} RUR</span>*/}
+                                    <span>1 {currencySecondField} = {rateForSecondField} {currencyFirstField}</span>
                                 </label>
                             </div>
 
@@ -83,7 +85,7 @@ export const Converter = (props: ConverterPropsType) => {
                                 <label htmlFor="">
                                     <span>You give {currencySecondField}</span>
                                     <input value={countSecondField} onChange={onChangeSecondField}/>
-                                    {/*<span>1 {currentCurrency} = {finalCurrencyRate} RUR</span>*/}
+                                    <span>1 {currencySecondField} = {rateForSecondField} {currencyFirstField}</span>
                                 </label>
                             </div>
                             <button className={'active'} onClick={() => setIsSwap(!isSwap)}>Swap</button>
@@ -95,7 +97,7 @@ export const Converter = (props: ConverterPropsType) => {
                                 <label htmlFor="">
                                     <span>You get {currencyFirstField}</span>
                                     <input value={countFirstField} onChange={onChangeFirstField}/>
-                                    {/*<span>1 RUB = {finalRurRate} {currentCurrency}</span>*/}
+                                    <span>1 {currencyFirstField} = {rateForFirstField} {currencySecondField}</span>
                                 </label>
                             </div>
                         </>
