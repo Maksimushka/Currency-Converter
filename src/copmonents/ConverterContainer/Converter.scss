@@ -1,32 +1,124 @@
-$redColor: #e75a5a;
+* {
+  outline: none;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
 
-.currencies {
+$mainColor: #16b67f;
+$otherColor: #cdcdcd;
+
+.main {
   display: flex;
-  justify-content: space-between;
-  flex-direction: row;
   align-items: center;
-  height: 60px;
-  width: 320px;
+  flex-direction: column;
 
-  .currencies-block {
-    padding-top: 3px;
-    height: 25px;
-    text-align: center;
-    list-style: none;
-    width: 45px;
-    cursor: pointer;
-    border: 1px solid #cdcdcd;
-    background-color: white;
-    color: black;
+  h1 {
+    margin-bottom: 60px;
+  }
 
-    &:hover {
-      background-color: $redColor;
-      color: white;
+  .converterBlock {
+    display: flex;
+    width: 80%;
+    max-width: 900px;
+    justify-content: space-between;
+    align-items: center;
+
+    .converterField {
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 40px;
+
+      .currencies {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        align-items: center;
+        height: 60px;
+        width: 320px;
+
+        .currencies-block {
+          padding-top: 6px;
+          height: 30px;
+          text-align: center;
+          list-style: none;
+          width: 55px;
+          cursor: pointer;
+          border: 1px solid #cdcdcd;
+          border-left: 0;
+          background-color: white;
+          color: black;
+
+          &:first-child {
+            border-left: 1px solid #cdcdcd;
+          }
+
+          &:hover {
+            background-color: $mainColor;
+            color: white;
+          }
+        }
+
+        .active {
+          background-color: $mainColor;
+          color: white;
+        }
+      }
+
+      label {
+        display: flex;
+        flex-direction: column;
+        width: 320px;
+
+        input {
+          box-sizing: border-box;
+          font-size: 32px;
+          padding-left: 15px;
+          padding-right: 15px;
+          height: 120px;
+          margin: 15px 0;
+          border: 1px solid $otherColor;
+
+          &:focus {
+            border: 1px solid black;
+          }
+        }
+
+      }
+    }
+
+    button {
+      width: 120px;
+      height: 40px;
+      font-size: 18px;
+      background-color: white;
+      color: $mainColor;
+      border: 1px solid $mainColor;
+      cursor: pointer;
+      border-radius: 10px;
+
+      &:hover {
+        color: white;
+        background-color: $mainColor;
+      }
+
+      &:active {
+        color: $mainColor;
+        background-color: white;
+      }
     }
   }
 
-  .active {
-    background-color: $redColor;
-    color: white;
+  @media screen and (max-width: 990px) {
+    .converterBlock {
+      flex-direction: column;
+
+      button {
+        margin-bottom: 30px;
+      }
+    }
   }
 }
+

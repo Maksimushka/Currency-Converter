@@ -8,8 +8,7 @@ type CurrenciesPropsType = {
     currentCurrency: string
 }
 
-const Currencies = ({currencies, changeCurrency, currentCurrency}: CurrenciesPropsType) => {
-
+const Currencies = React.memo(({currencies, changeCurrency, currentCurrency}: CurrenciesPropsType) => {
     return (
         <div className='currencies'>
             {
@@ -17,12 +16,13 @@ const Currencies = ({currencies, changeCurrency, currentCurrency}: CurrenciesPro
                     const style = `currencies-block ${currentCurrency === el.CharCode ? 'active': ''}`
 
                     return <li
+                        key={`${el.ID} ${el.CharCode}`}
                         onClick={() => changeCurrency(el.CharCode)}
                         className={style}>{el.CharCode}</li>
                 })
             }
         </div>
     );
-};
+})
 
 export default Currencies

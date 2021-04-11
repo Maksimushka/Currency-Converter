@@ -7,7 +7,6 @@ export const instance = axios.create({
 
 export const getData = () => {
     return instance.get(``).then(resp => {
-        console.log(resp.data)
         return resp.data.Valute
     })
 }

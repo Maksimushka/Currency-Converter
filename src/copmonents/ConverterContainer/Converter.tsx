@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './../CurrencyView.scss'
+import './Converter.scss'
 import {currency} from '../../redux/reducer/converter-reducer';
 import Currencies from './Currencies';
 
@@ -37,7 +37,7 @@ export const Converter = (props: ConverterPropsType) => {
     }
 
     const onChangeCurrencyFirstField = (currencyOfFirstField: string) => {
-        changeCurrency(currencyOfFirstField, currencySecondField ,countFirstField)
+        changeCurrency(currencyOfFirstField, currencySecondField, countFirstField)
     }
     const onChangeCurrencySecondField = (currencyOfSecondField: string) => {
         changeCurrency(currencyFirstField, currencyOfSecondField, countFirstField)
@@ -46,64 +46,62 @@ export const Converter = (props: ConverterPropsType) => {
     let rateForFirstField = rateFirstCurrency.toFixed(3)
     let rateForSecondField = rateSecondCurrency.toFixed(3)
     return (
-        <>
-            <div className='fields'>
-                {
-                    isSwap
-                        ? <>
-                            <div>
-                                <Currencies
-                                    changeCurrency={onChangeCurrencyFirstField}
-                                    currentCurrency={currencyFirstField}
-                                    currencies={currencies}/>
-                                <label htmlFor="">
-                                    <span>You give {currencyFirstField}</span>
-                                    <input value={countFirstField} onChange={onChangeFirstField}/>
-                                    <span>1 {currencyFirstField} = {rateForFirstField} {currencySecondField}</span>
-                                </label>
-                            </div>
-                            <button className={'active'} onClick={() => setIsSwap(!isSwap)}>Swap</button>
-                            <div>
-                                <Currencies
-                                    changeCurrency={onChangeCurrencySecondField}
-                                    currentCurrency={currencySecondField}
-                                    currencies={currencies}/>
-                                <label htmlFor="">
-                                    <span>You get {currencySecondField}</span>
-                                    <input value={countSecondField} onChange={onChangeSecondField}/>
-                                    <span>1 {currencySecondField} = {rateForSecondField} {currencyFirstField}</span>
-                                </label>
-                            </div>
-
-                        </>
-                        : <>
-                            <div>
-                                <Currencies
-                                    changeCurrency={onChangeCurrencySecondField}
-                                    currentCurrency={currencySecondField}
-                                    currencies={currencies}/>
-                                <label htmlFor="">
-                                    <span>You give {currencySecondField}</span>
-                                    <input value={countSecondField} onChange={onChangeSecondField}/>
-                                    <span>1 {currencySecondField} = {rateForSecondField} {currencyFirstField}</span>
-                                </label>
-                            </div>
-                            <button className={'active'} onClick={() => setIsSwap(!isSwap)}>Swap</button>
-                            <div>
-                                <Currencies
-                                    changeCurrency={onChangeCurrencyFirstField}
-                                    currentCurrency={currencyFirstField}
-                                    currencies={currencies}/>
-                                <label htmlFor="">
-                                    <span>You get {currencyFirstField}</span>
-                                    <input value={countFirstField} onChange={onChangeFirstField}/>
-                                    <span>1 {currencyFirstField} = {rateForFirstField} {currencySecondField}</span>
-                                </label>
-                            </div>
-                        </>
-                }
-
-            </div>
-        </>
+        <div className='main'>
+            <h1>Currency converter</h1>
+            {
+                isSwap
+                    ? <div className="converterBlock">
+                        <div className="converterField">
+                            <Currencies
+                                changeCurrency={onChangeCurrencyFirstField}
+                                currentCurrency={currencyFirstField}
+                                currencies={currencies}/>
+                            <label htmlFor="">
+                                <span>You give {currencyFirstField}</span>
+                                <input type={'number'} value={countFirstField} onChange={onChangeFirstField}/>
+                                <span>1 {currencyFirstField} = {rateForFirstField} {currencySecondField}</span>
+                            </label>
+                        </div>
+                        <button className={'active'} onClick={() => setIsSwap(!isSwap)}>Swap</button>
+                        <div className="converterField">
+                            <Currencies
+                                changeCurrency={onChangeCurrencySecondField}
+                                currentCurrency={currencySecondField}
+                                currencies={currencies}/>
+                            <label htmlFor="">
+                                <span>You get {currencySecondField}</span>
+                                <input type={'number'} value={countSecondField} onChange={onChangeSecondField}/>
+                                <span>1 {currencySecondField} = {rateForSecondField} {currencyFirstField}</span>
+                            </label>
+                        </div>
+                    </div>
+                    :
+                    <div className="converterBlock">
+                        <div className="converterField">
+                            <Currencies
+                                changeCurrency={onChangeCurrencySecondField}
+                                currentCurrency={currencySecondField}
+                                currencies={currencies}/>
+                            <label htmlFor="">
+                                <span>You give {currencySecondField}</span>
+                                <input type={'number'} value={countSecondField} onChange={onChangeSecondField}/>
+                                <span>1 {currencySecondField} = {rateForSecondField} {currencyFirstField}</span>
+                            </label>
+                        </div>
+                        <button onClick={() => setIsSwap(!isSwap)}>Swap</button>
+                        <div className="converterField">
+                            <Currencies
+                                changeCurrency={onChangeCurrencyFirstField}
+                                currentCurrency={currencyFirstField}
+                                currencies={currencies}/>
+                            <label htmlFor="">
+                                <span>You get {currencyFirstField}</span>
+                                <input type={'number'} value={countFirstField} onChange={onChangeFirstField}/>
+                                <span>1 {currencyFirstField} = {rateForFirstField} {currencySecondField}</span>
+                            </label>
+                        </div>
+                    </div>
+            }
+        </div>
     )
 }

@@ -1,13 +1,5 @@
 .App {
+  padding-top: 100px;
   margin: 0 auto;
-  margin-top: 60px;
-  display: flex;
-  width: 80%;
-  align-items: center;
   min-height: 500px;
-  border: 1px solid #e75a5a;
-  border-radius: 7px;
-  justify-content: space-around;
-
-  flex-direction: column;
 }
