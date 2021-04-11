@@ -1,11 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-    changeFieldValueAC, setCurrentCurrency,
-} from '../../redux/actions/actions';
+import {changeFieldValueAC, setCurrentCurrency} from '../../redux/actions/actions';
 import {Converter} from './Converter';
 import {storeRootType} from '../../redux/store';
-
 
 export const CurrencyContainer = () => {
     const dispatch = useDispatch()
@@ -20,6 +17,16 @@ export const CurrencyContainer = () => {
     // Поиск объектов валюты
     let currencyObjectOfFirstField = currencies.find(el => el.CharCode === currencyFirstField)
     let currencyObjectOfSecondField = currencies.find(el => el.CharCode === currencySecondField)
+
+    // Проверка номинала валюты
+    useEffect(() => {
+        if (currencyObjectOfFirstField!.Nominal > 1) {
+            currencyObjectOfFirstField!.Value = currencyObjectOfFirstField!.Value / currencyObjectOfFirstField!.Nominal
+        }
+        if (currencyObjectOfSecondField!.Nominal > 1) {
+            currencyObjectOfSecondField!.Value = currencyObjectOfSecondField!.Value / currencyObjectOfSecondField!.Nominal
+        }
+    }, [])
 
     // Здесь вычилсяется значение, которое далее используется для ковертации
     let rateForChangeValue = currencyObjectOfFirstField!.Value / currencyObjectOfSecondField!.Value
@@ -72,6 +79,8 @@ export const CurrencyContainer = () => {
             dispatch(changeFieldValueAC((+value / rateForChangeValue).toFixed(2), value))
         }
     }
+
+
 
     return (
         <Converter

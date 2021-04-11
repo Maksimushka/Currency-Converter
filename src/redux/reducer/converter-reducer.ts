@@ -11,30 +11,42 @@ export type currency = {
 }
 export type newCurrencyReducerStateType = {
     currencies: currency[] | []
+    mainCurrencies: currency[] | []
     countFirstField: string
     countSecondField: string
     currencyFirstField: string
     currencySecondField: string
     loading: boolean
+    firstPopupCurrency: currency
+    secondPopupCurrency: currency
 }
 
 const initialState: newCurrencyReducerStateType = {
     loading: true,
-    currencies: [
-        {
+    currencies: [{
             CharCode: 'RUR',
             Value: 0,
             Previous: 0,
-            ID: '142',
+            ID: '1423hgdfg5',
             Name: 'Российский рубль',
             Nominal: 1,
             NumCode: ''
-        }
-    ],
+        }],
+    mainCurrencies: [{
+        CharCode: 'RUR',
+        Value: 0,
+        Previous: 0,
+        ID: '1423hgdfg5',
+        Name: 'Российский рубль',
+        Nominal: 1,
+        NumCode: ''
+    }],
     countFirstField: '',
     countSecondField: '',
     currencyFirstField: 'RUR',
-    currencySecondField: 'USD'
+    currencySecondField: 'USD',
+    firstPopupCurrency: {} as currency ,
+    secondPopupCurrency: {} as currency ,
 }
 
 export const converterReducer = (state = initialState, action: CurrencyActionsTypeInProgress): newCurrencyReducerStateType => {
@@ -63,6 +75,20 @@ export const converterReducer = (state = initialState, action: CurrencyActionsTy
             return {
                 ...state,
                 loading: action.payload
+            }
+        }
+        case ActionsTypes.SET_POPUP_CURRENCY: {
+            debugger
+            return {
+                ...state,
+                firstPopupCurrency: state.currencies.find(el => el.CharCode === action.payload.firstPopupCurrency)!,
+                secondPopupCurrency: state.currencies.find(el => el.CharCode === action.payload.secondPopupCurrency)!
+            }
+        }
+        case ActionsTypes.SET_MAIN_CURRENCY: {
+            return {
+                ...state,
+                mainCurrencies: [...state.mainCurrencies, ...action.payload]
             }
         }
         default:
