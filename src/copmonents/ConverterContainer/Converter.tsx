@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import './Converter.scss'
-import {currency} from '../../redux/reducer/converter-reducer';
+import {Currency} from '../../redux/reducer/converter-reducer';
 import Currencies from './Currencies/Currencies';
-import CurrenciesList from './Currencies/CurrensiesList';
+import CurrenciesList from './CurrensiesList';
 import {useDispatch, useSelector} from 'react-redux';
 import {storeRootType} from '../../redux/store';
 import {setPopupCurrencyAC} from '../../redux/actions/actions';
@@ -11,7 +11,7 @@ type ConverterPropsType = {
     rateFirstCurrency: number
     rateSecondCurrency: number
     changeCurrency: (currencyOfFirstField: string, currencyOfSecondField: string, value: string) => void
-    currencies: currency[]
+    currencies: Currency[]
     currencyFirstField: string
     currencySecondField: string
     countFirstField: string

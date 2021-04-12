@@ -1,6 +1,6 @@
 import {ActionsTypes, CurrencyActionsTypeInProgress} from '../actions/actions';
 
-export type currency = {
+export type Currency = {
     CharCode: string
     Value: number
     Previous: number
@@ -9,19 +9,19 @@ export type currency = {
     Nominal: number
     NumCode: string
 }
-export type newCurrencyReducerStateType = {
-    currencies: currency[] | []
-    mainCurrencies: currency[] | []
+export type NewCurrencyReducerStateType = {
+    currencies: Currency[]
+    mainCurrencies: Currency[]
     countFirstField: string
     countSecondField: string
     currencyFirstField: string
     currencySecondField: string
     loading: boolean
-    firstPopupCurrency: currency
-    secondPopupCurrency: currency
+    firstPopupCurrency: Currency
+    secondPopupCurrency: Currency
 }
 
-const initialState: newCurrencyReducerStateType = {
+const initialState: NewCurrencyReducerStateType = {
     loading: true,
     currencies: [{
             CharCode: 'RUR',
@@ -45,16 +45,24 @@ const initialState: newCurrencyReducerStateType = {
     countSecondField: '',
     currencyFirstField: 'RUR',
     currencySecondField: 'USD',
-    firstPopupCurrency: {} as currency ,
-    secondPopupCurrency: {} as currency ,
+    firstPopupCurrency: {} as Currency ,
+    secondPopupCurrency: {} as Currency ,
 }
 
-export const converterReducer = (state = initialState, action: CurrencyActionsTypeInProgress): newCurrencyReducerStateType => {
+export const converterReducer = (state = initialState, action: CurrencyActionsTypeInProgress): NewCurrencyReducerStateType => {
     switch (action.type) {
         case ActionsTypes.SET_CURRENCIES: {
             return {
                 ...state,
-                currencies: [...state.currencies, ...action.payload]
+                currencies: [...state.currencies, ...action.payload
+                    .filter(el => el.CharCode !== 'XDR' && el.CharCode !== 'TJS')
+                    .sort((a, b) => {
+                        if(a.Name < b.Name) { return -1 }
+                        if(a.Name > b.Name) { return 1 }
+                        return 0
+                    })
+                    .map(el => (el.Nominal > 1) ? {...el, Value: el.Value / el.Nominal, Nominal: 1} : el)
+                ]
             }
         }
         case ActionsTypes.SET_CURRENT_CURRENCY: {
@@ -78,7 +86,6 @@ export const converterReducer = (state = initialState, action: CurrencyActionsTy
             }
         }
         case ActionsTypes.SET_POPUP_CURRENCY: {
-            debugger
             return {
                 ...state,
                 firstPopupCurrency: state.currencies.find(el => el.CharCode === action.payload.firstPopupCurrency)!,

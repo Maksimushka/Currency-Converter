@@ -1,7 +1,7 @@
-import {converterReducer, newCurrencyReducerStateType} from './converter-reducer';
+import {converterReducer, NewCurrencyReducerStateType} from './converter-reducer';
 import {changeFieldValueAC, setCurrentCurrency, setLoadingAC} from '../actions/actions';
 
-let state: newCurrencyReducerStateType;
+let state: NewCurrencyReducerStateType;
 
 beforeEach(() => {
     state = {

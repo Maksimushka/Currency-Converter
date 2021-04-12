@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeFieldValueAC, setCurrentCurrency} from '../../redux/actions/actions';
 import {Converter} from './Converter';
@@ -19,14 +19,20 @@ export const CurrencyContainer = () => {
     let currencyObjectOfSecondField = currencies.find(el => el.CharCode === currencySecondField)
 
     // Проверка номинала валюты
-    useEffect(() => {
-        if (currencyObjectOfFirstField!.Nominal > 1) {
-            currencyObjectOfFirstField!.Value = currencyObjectOfFirstField!.Value / currencyObjectOfFirstField!.Nominal
-        }
-        if (currencyObjectOfSecondField!.Nominal > 1) {
-            currencyObjectOfSecondField!.Value = currencyObjectOfSecondField!.Value / currencyObjectOfSecondField!.Nominal
-        }
-    }, [])
+
+    // const checkNominal = (firstCurrency: Currency, secondCurrency: Currency) => {
+    //     if (firstCurrency!.Nominal > 1) {
+    //         firstCurrency!.Value = firstCurrency!.Value / firstCurrency!.Nominal
+    //         firstCurrency!.Nominal = 1
+    //     }
+    //     if (secondCurrency!.Nominal > 1) {
+    //         secondCurrency!.Value = secondCurrency!.Value / secondCurrency!.Nominal
+    //         secondCurrency!.Nominal = 1
+    //     }
+    // }
+    // useEffect(() => {
+    //     checkNominal(currencyObjectOfFirstField!, currencyObjectOfSecondField!)
+    // }, [])
 
     // Здесь вычилсяется значение, которое далее используется для ковертации
     let rateForChangeValue = currencyObjectOfFirstField!.Value / currencyObjectOfSecondField!.Value
@@ -50,6 +56,7 @@ export const CurrencyContainer = () => {
     const changeCurrency = (currencyOfFirstField: string, currencyOfSecondField: string, value: string) => {
         currencyObjectOfFirstField = currencies.find(el => el.CharCode === currencyOfFirstField)
         currencyObjectOfSecondField = currencies.find(el => el.CharCode === currencyOfSecondField)
+        // checkNominal(currencyObjectOfFirstField!, currencyObjectOfSecondField!)
         rateForChangeValue = currencyObjectOfFirstField!.Value / currencyObjectOfSecondField!.Value
         if (currencyObjectOfFirstField!.CharCode === 'RUR') {
             rateForChangeValue = 1 / currencyObjectOfSecondField!.Value
@@ -79,8 +86,6 @@ export const CurrencyContainer = () => {
             dispatch(changeFieldValueAC((+value / rateForChangeValue).toFixed(2), value))
         }
     }
-
-
 
     return (
         <Converter

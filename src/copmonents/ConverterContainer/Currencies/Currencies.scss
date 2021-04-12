@@ -17,6 +17,7 @@
     justify-content: center;
     flex-direction: row;
     align-items: center;
+
     .currencies-block {
       padding-top: 6px;
       height: 30px;
@@ -36,6 +37,20 @@
       &:hover {
         background-color: $mainColor;
         color: white;
+      }
+    }
+
+    .toggle {
+      svg {
+        transform: rotate(180deg);
+
+        &.rotated {
+          transform: rotate(0);
+
+          & path {
+            fill: white;
+          }
+        }
       }
     }
 

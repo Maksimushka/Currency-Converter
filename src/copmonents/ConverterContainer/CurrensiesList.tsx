@@ -1,8 +1,8 @@
 import React from 'react';
-import {currency} from '../../../redux/reducer/converter-reducer';
+import {Currency} from '../../redux/reducer/converter-reducer';
 
 type CurrenciesListPropsType = {
-    currencies: currency[]
+    currencies: Currency[]
     changePopupCurrency: (currency: string) => void
 }
 

@@ -1,6 +1,6 @@
 // TYPES
 import {Dispatch} from 'redux';
-import {currency} from '../reducer/converter-reducer';
+import {Currency} from '../reducer/converter-reducer';
 import {getData} from '../../API';
 
 export enum ActionsTypes {
@@ -20,7 +20,7 @@ export type CurrencyActionsTypeInProgress = ReturnType<typeof setCurrenciesAC>
     | ReturnType<typeof setMainCurrenciesAC>
 
 // ACTION CREATORS
-export const setCurrenciesAC = (currencies: currency[]) => ({
+export const setCurrenciesAC = (currencies: Currency[]) => ({
     type: ActionsTypes.SET_CURRENCIES,
     payload: currencies
 } as const)
@@ -49,7 +49,7 @@ export const setPopupCurrencyAC = (firstPopupCurrency: string, secondPopupCurren
         secondPopupCurrency
     }
 } as const)
-export const setMainCurrenciesAC = (currencies: currency[]) => ({
+export const setMainCurrenciesAC = (currencies: Currency[]) => ({
     type: ActionsTypes.SET_MAIN_CURRENCY,
     payload: currencies
 } as const)
@@ -58,8 +58,7 @@ export const setMainCurrenciesAC = (currencies: currency[]) => ({
 export const getCurrencies = () => (dispatch: Dispatch) => {
     dispatch(setLoadingAC(true))
     getData().then(resp => {
-        debugger
-        dispatch(setCurrenciesAC(Object.values(resp)))
+        dispatch(setCurrenciesAC( Object.values(resp) ))
         dispatch(setMainCurrenciesAC([resp.USD, resp.EUR, resp.JPY]))
         dispatch(setPopupCurrencyAC(resp.CHF.CharCode, resp.CHF.CharCode))
         dispatch(setLoadingAC(false))
