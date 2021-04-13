@@ -6,12 +6,14 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-$mainColor: #16b67f;
+$mainColor: #fa6a43;
 $otherColor: #cdcdcd;
 
 .main {
+  width: 100%;
   display: flex;
   align-items: center;
+  height: 700px;
   flex-direction: column;
 
   h1 {
@@ -80,9 +82,11 @@ $otherColor: #cdcdcd;
     box-shadow: 0 8px 40px 0 rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
-    height: 500px;
+    align-items: center;
+    height: 470px;
     flex-wrap: wrap;
-    width: 850px;
+    width: 80%;
+    max-width: 900px;
     box-sizing: border-box;
     padding: 15px;
     position: absolute;
@@ -97,10 +101,14 @@ $otherColor: #cdcdcd;
       margin-bottom: 10px;
       justify-content: space-between;
       width: 240px;
-
       cursor: pointer;
 
+      //&:nth-child(11) {
+      //  margin-bottom: 0;
+      //}
+
       &:hover {
+        color: white;
         background-color: $mainColor;
       }
     }

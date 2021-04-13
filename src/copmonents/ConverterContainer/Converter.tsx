@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import './Converter.scss'
 import {Currency} from '../../redux/reducer/converter-reducer';
 import Currencies from './Currencies/Currencies';
@@ -6,6 +6,7 @@ import CurrenciesList from './CurrensiesList';
 import {useDispatch, useSelector} from 'react-redux';
 import {storeRootType} from '../../redux/store';
 import {setPopupCurrencyAC} from '../../redux/actions/actions';
+import {useWindowSize} from '../../utils/hooks';
 
 type ConverterPropsType = {
     rateFirstCurrency: number
@@ -38,6 +39,24 @@ export const Converter = (props: ConverterPropsType) => {
 
     const [isVisible, setIsVisible] = useState<{list: 'first' | 'second' | null}>({list: null})
     const [isSwap, setIsSwap] = useState(true)
+    const [width] = useWindowSize()
+
+    useEffect(() => {
+        if (isVisible.list && width > 990) {
+            document.body.addEventListener('click', handleOutsideClick)
+        }
+
+        return () => {
+            document.body.removeEventListener('click', handleOutsideClick)
+        }
+    }, [isVisible])
+    const popupRef = useRef<any>()
+
+    const handleOutsideClick = (e: any) => {
+        if (!e.path.includes(popupRef.current)) {
+            setIsVisible({list: null})
+        }
+    }
 
     const onChangeFirstField = (e: React.ChangeEvent<HTMLInputElement>) => {
         let value = e.currentTarget.value
@@ -87,12 +106,17 @@ export const Converter = (props: ConverterPropsType) => {
                     ? <div className="converterBlock">
                         <div className="converterField">
                             <Currencies
+                                currencies={currencies}
+                                width={width}
+                                changeFirstPopupCurrency={changeFirstPopupCurrency}
+                                changeSecondPopupCurrency={changeSecondPopupCurrency}
+                                isVisible={isVisible}
                                 toggle={toggleForFirst}
                                 popupCurrency={firstPopupCurrency}
                                 onChangeVisible={() => onChangeVisible('first')}
                                 changeCurrency={onChangeCurrencyFirstField}
                                 currentCurrency={currencyFirstField}
-                                currencies={mainCurrencies}/>
+                                mainCurrencies={mainCurrencies}/>
                             <label htmlFor="">
                                 <span>You give {currencyFirstField}</span>
                                 <input type={'number'} value={countFirstField} onChange={onChangeFirstField}/>
@@ -102,12 +126,17 @@ export const Converter = (props: ConverterPropsType) => {
                         <button className={'active'} onClick={() => setIsSwap(!isSwap)}>Swap</button>
                         <div className="converterField">
                             <Currencies
+                                currencies={currencies}
+                                width={width}
+                                changeFirstPopupCurrency={changeFirstPopupCurrency}
+                                changeSecondPopupCurrency={changeSecondPopupCurrency}
+                                isVisible={isVisible}
                                 toggle={toggleForSecond}
                                 popupCurrency={secondPopupCurrency}
                                 changeCurrency={onChangeCurrencySecondField}
                                 currentCurrency={currencySecondField}
                                 onChangeVisible={() => onChangeVisible('second')}
-                                currencies={mainCurrencies}/>
+                                mainCurrencies={mainCurrencies}/>
                             <label htmlFor="">
                                 <span>You get {currencySecondField}</span>
                                 <input type={'number'} value={countSecondField} onChange={onChangeSecondField}/>
@@ -118,12 +147,17 @@ export const Converter = (props: ConverterPropsType) => {
                     : <div className="converterBlock">
                         <div className="converterField">
                             <Currencies
+                                currencies={currencies}
+                                width={width}
+                                changeFirstPopupCurrency={changeFirstPopupCurrency}
+                                changeSecondPopupCurrency={changeSecondPopupCurrency}
+                                isVisible={isVisible}
                                 toggle={toggleForSecond}
                                 popupCurrency={secondPopupCurrency}
                                 changeCurrency={onChangeCurrencySecondField}
                                 currentCurrency={currencySecondField}
                                 onChangeVisible={() => onChangeVisible('second')}
-                                currencies={mainCurrencies}/>
+                                mainCurrencies={mainCurrencies}/>
                             <label htmlFor="">
                                 <span>You give {currencySecondField}</span>
                                 <input type={'number'} value={countSecondField} onChange={onChangeSecondField}/>
@@ -133,12 +167,17 @@ export const Converter = (props: ConverterPropsType) => {
                         <button onClick={() => setIsSwap(!isSwap)}>Swap</button>
                         <div className="converterField">
                             <Currencies
+                                currencies={currencies}
+                                width={width}
+                                changeFirstPopupCurrency={changeFirstPopupCurrency}
+                                changeSecondPopupCurrency={changeSecondPopupCurrency}
+                                isVisible={isVisible}
                                 toggle={toggleForFirst}
                                 popupCurrency={firstPopupCurrency}
                                 onChangeVisible={() => onChangeVisible('first')}
                                 changeCurrency={onChangeCurrencyFirstField}
                                 currentCurrency={currencyFirstField}
-                                currencies={mainCurrencies}/>
+                                mainCurrencies={mainCurrencies}/>
                             <label htmlFor="">
                                 <span>You get {currencyFirstField}</span>
                                 <input type={'number'} value={countFirstField} onChange={onChangeFirstField}/>
@@ -147,7 +186,9 @@ export const Converter = (props: ConverterPropsType) => {
                         </div>
                     </div>
             }
-            {isVisible.list && <CurrenciesList
+            {(isVisible.list && width > 990) && <CurrenciesList
+                popupRef={popupRef}
+                width={width}
                 changePopupCurrency={isVisible.list === 'first' ? changeFirstPopupCurrency : changeSecondPopupCurrency}
                 currencies={currencies}/>}
         </div>

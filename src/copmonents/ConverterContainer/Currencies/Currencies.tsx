@@ -1,24 +1,32 @@
 import React from 'react';
 import {Currency} from '../../../redux/reducer/converter-reducer';
 import './Currencies.scss'
+import CurrenciesList from '../CurrensiesList';
 
 type CurrenciesPropsType = {
     onChangeVisible: () => void
     changeCurrency: (currency: string) => void
     currencies: Currency[]
+    mainCurrencies: Currency[]
     currentCurrency: string
     popupCurrency: Currency
     toggle: boolean
+    isVisible: {list: 'first' | 'second' | null}
+    changeSecondPopupCurrency: (currency: string) => void
+    changeFirstPopupCurrency: (currency: string) => void
+    width: number
 }
 
 const Currencies = React.memo((props: CurrenciesPropsType) => {
-    const {popupCurrency, currencies, changeCurrency, currentCurrency, onChangeVisible, toggle} = props
+    const {popupCurrency, mainCurrencies, isVisible, currencies,
+        changeCurrency, currentCurrency, onChangeVisible, width,
+        toggle, changeSecondPopupCurrency, changeFirstPopupCurrency} = props
     const styleForToggle = `currencies-block toggle ${toggle ? 'active' : ''}`
     return (
         <div className='currencies'>
             <ul>
                 {
-                    currencies.map(el => {
+                    mainCurrencies.map(el => {
                         const style = `currencies-block ${currentCurrency === el.CharCode ? 'active': ''}`
 
                         return <li
@@ -44,6 +52,13 @@ const Currencies = React.memo((props: CurrenciesPropsType) => {
                             fill="#2C2C2C"
                         />
                     </svg>
+                    { width < 990 &&
+                        <CurrenciesList
+                            width={width}
+                        changePopupCurrency={isVisible.list === 'first' ? changeFirstPopupCurrency : changeSecondPopupCurrency}
+                        currencies={currencies}/>
+                    }
+
                 </li>
             </ul>
         </div>
