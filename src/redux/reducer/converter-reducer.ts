@@ -9,20 +9,10 @@ export type Currency = {
     Nominal: number
     NumCode: string
 }
-export type NewCurrencyReducerStateType = {
-    currencies: Currency[]
-    mainCurrencies: Currency[]
-    countFirstField: string
-    countSecondField: string
-    currencyFirstField: string
-    currencySecondField: string
-    loading: boolean
-    firstPopupCurrency: Currency
-    secondPopupCurrency: Currency
-}
 
-const initialState: NewCurrencyReducerStateType = {
+const initialState = {
     loading: true,
+    currenciesForList: [] as Currency[],
     currencies: [{
             CharCode: 'RUR',
             Value: 0,
@@ -45,11 +35,13 @@ const initialState: NewCurrencyReducerStateType = {
     countSecondField: '',
     currencyFirstField: 'RUR',
     currencySecondField: 'USD',
-    firstPopupCurrency: {} as Currency ,
-    secondPopupCurrency: {} as Currency ,
+    firstPopupCurrency: {} as Currency,
+    secondPopupCurrency: {} as Currency,
 }
 
-export const converterReducer = (state = initialState, action: CurrencyActionsTypeInProgress): NewCurrencyReducerStateType => {
+export type CurrencyReducerStateType = typeof initialState
+
+export const converterReducer = (state = initialState, action: CurrencyActionsTypeInProgress): CurrencyReducerStateType => {
     switch (action.type) {
         case ActionsTypes.SET_CURRENCIES: {
             return {
@@ -57,12 +49,19 @@ export const converterReducer = (state = initialState, action: CurrencyActionsTy
                 currencies: [...state.currencies, ...action.payload
                     .filter(el => el.CharCode !== 'XDR' && el.CharCode !== 'TJS')
                     .sort((a, b) => {
-                        if(a.Name < b.Name) { return -1 }
-                        if(a.Name > b.Name) { return 1 }
+                        if (a.Name < b.Name) return -1
+                        if (a.Name > b.Name) return 1
                         return 0
                     })
                     .map(el => (el.Nominal > 1) ? {...el, Value: el.Value / el.Nominal, Nominal: 1} : el)
-                ]
+                ],
+                currenciesForList: action.payload
+                    .filter(el => el.CharCode !== 'XDR' && el.CharCode !== 'TJS')
+                    .sort((a, b) => {
+                        if (a.Name < b.Name) return -1
+                        if (a.Name > b.Name) return 1
+                        return 0
+                    })
             }
         }
         case ActionsTypes.SET_CURRENT_CURRENCY: {

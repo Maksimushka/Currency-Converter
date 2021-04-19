@@ -4,6 +4,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {CurrencyContainer} from './copmonents/ConverterContainer/ConverterContainer';
 import {getCurrencies} from './redux/actions/actions';
 import {storeRootType} from './redux/store';
+import {Route, Switch } from 'react-router-dom';
+import ListOfCurrencies from './copmonents/ListOfCurrencies/ListOfCurrencies';
 
 function App() {
     const {loading} = useSelector((state: storeRootType) => state.converter)
@@ -18,7 +20,10 @@ function App() {
 
     return (
         <div className="App">
-            <CurrencyContainer/>
+            <Switch>
+                <Route exact path={'/'} render={() => <CurrencyContainer/>} />
+                <Route path={'/list'} render={() => <ListOfCurrencies/>} />
+            </Switch>
         </div>
     );
 }

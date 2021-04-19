@@ -1,9 +1,9 @@
 import React from 'react';
 import {Currency} from '../../redux/reducer/converter-reducer';
 import './Currencies.scss'
-import CurrenciesList from '../ConverterContainer/CurrensiesList';
 import {useSelector} from 'react-redux';
 import {storeRootType} from '../../redux/store';
+import PopupCurrencies from '../PopupCurrencies';
 
 type CurrenciesPropsType = {
     onChangeVisible: () => void
@@ -71,7 +71,7 @@ const Currencies = React.memo((props: CurrenciesPropsType) => {
                                     fill="#2C2C2C"
                                 />
                             </svg>
-                            <CurrenciesList
+                            <PopupCurrencies
                                 width={width}
                                 changePopupCurrency={changePopupCurrency}/>
                         </li>

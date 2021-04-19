@@ -1,5 +1,4 @@
 import React, {LegacyRef} from 'react';
-import {Currency} from '../redux/reducer/converter-reducer';
 import {useSelector} from 'react-redux';
 import {storeRootType} from '../redux/store';
 
@@ -9,7 +8,7 @@ type CurrenciesListPropsType = {
     popupRef?: LegacyRef<HTMLDivElement> | undefined
 }
 
-const CurrenciesList = ({changePopupCurrency, width, popupRef}: CurrenciesListPropsType) => {
+const PopupCurrencies = ({changePopupCurrency, width, popupRef}: CurrenciesListPropsType) => {
 
     const {currencies} = useSelector((state: storeRootType) => state.converter)
 
@@ -70,4 +69,4 @@ const CurrenciesList = ({changePopupCurrency, width, popupRef}: CurrenciesListPr
     );
 };
 
-export default CurrenciesList;
+export default PopupCurrencies;

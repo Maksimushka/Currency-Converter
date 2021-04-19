@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './Converter.scss'
 import {Currency} from '../../redux/reducer/converter-reducer';
-import CurrenciesList from '../CurrensiesList';
+import PopupCurrencies from '../PopupCurrencies';
 import {useDispatch, useSelector} from 'react-redux';
 import {storeRootType} from '../../redux/store';
 import {setPopupCurrencyAC} from '../../redux/actions/actions';
@@ -115,7 +115,7 @@ export const Converter = (props: ConverterPropsType) => {
                     <span>1 {currencySecondField} = {rateForSecondField} {currencyFirstField}</span>
                 </div>
             </div>
-            {(isVisible.list && width > 990) && <CurrenciesList
+            {(isVisible.list && width > 990) && <PopupCurrencies
                 popupRef={popupRef}
                 width={width}
                 changePopupCurrency={isVisible.list === 'first' ? changeFirstPopupCurrency : changeSecondPopupCurrency}/>}

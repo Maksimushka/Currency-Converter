@@ -31,7 +31,7 @@ export const setCurrentCurrency = (currencyOfFirstField: string, currencyOfSecon
         currencyOfSecondField
     }
 } as const)
-export const changeFieldValueAC = (amountFirstField: string, amountSecondField: string ) => ({
+export const changeFieldValueAC = (amountFirstField: string, amountSecondField: string) => ({
     type: ActionsTypes.CHANGE_FIELD_VALUE,
     payload: {
         amountFirstField,
@@ -55,12 +55,11 @@ export const setMainCurrenciesAC = (currencies: Currency[]) => ({
 } as const)
 
 // THUNK CREATORS
-export const getCurrencies = () => (dispatch: Dispatch) => {
+export const getCurrencies = () => async (dispatch: Dispatch) => {
     dispatch(setLoadingAC(true))
-    getData().then(resp => {
-        dispatch(setCurrenciesAC( Object.values(resp) ))
-        dispatch(setMainCurrenciesAC([resp.USD, resp.EUR, resp.JPY]))
-        dispatch(setPopupCurrencyAC(resp.CHF.CharCode, resp.CHF.CharCode))
-        dispatch(setLoadingAC(false))
-    })
+    let {Valute} = await getData()
+    dispatch(setCurrenciesAC(Object.values(Valute)))
+    dispatch(setMainCurrenciesAC([Valute.USD, Valute.EUR, Valute.JPY]))
+    dispatch(setPopupCurrencyAC(Valute.CHF.CharCode, Valute.CHF.CharCode))
+    dispatch(setLoadingAC(false))
 }

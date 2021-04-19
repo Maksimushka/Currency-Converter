@@ -7,6 +7,6 @@ export const instance = axios.create({
 
 export const getData = () => {
     return instance.get(``).then(resp => {
-        return resp.data.Valute
+        return resp.data
     })
 }
