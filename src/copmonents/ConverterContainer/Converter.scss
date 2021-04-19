@@ -1,6 +1,7 @@
 * {
   outline: none;
 }
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -31,27 +32,21 @@ $otherColor: #cdcdcd;
       width: 320px;
       display: flex;
       flex-direction: column;
-      margin-bottom: 40px;
+      padding-bottom: 20px;
 
-      label {
-        display: flex;
-        flex-direction: column;
-        width: 320px;
+      input {
+        box-sizing: border-box;
+        font-size: 32px;
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+        height: 120px;
+        margin: 15px 0;
+        border: 1px solid $otherColor;
 
-        input {
-          box-sizing: border-box;
-          font-size: 32px;
-          padding-left: 15px;
-          padding-right: 15px;
-          height: 120px;
-          margin: 15px 0;
-          border: 1px solid $otherColor;
-
-          &:focus {
-            border: 1px solid black;
-          }
+        &:focus {
+          border: 1px solid black;
         }
-
       }
     }
 
@@ -102,10 +97,6 @@ $otherColor: #cdcdcd;
       justify-content: space-between;
       width: 240px;
       cursor: pointer;
-
-      //&:nth-child(11) {
-      //  margin-bottom: 0;
-      //}
 
       &:hover {
         color: white;

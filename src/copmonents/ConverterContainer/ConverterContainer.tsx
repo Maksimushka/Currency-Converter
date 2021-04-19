@@ -7,32 +7,12 @@ import {storeRootType} from '../../redux/store';
 export const CurrencyContainer = () => {
     const dispatch = useDispatch()
     const {
-        currencies,
-        currencyFirstField,
-        currencySecondField,
-        countFirstField,
-        countSecondField,
+        currencies, currencyFirstField, currencySecondField,
     } = useSelector((state: storeRootType) => state.converter)
 
     // Поиск объектов валюты
     let currencyObjectOfFirstField = currencies.find(el => el.CharCode === currencyFirstField)
     let currencyObjectOfSecondField = currencies.find(el => el.CharCode === currencySecondField)
-
-    // Проверка номинала валюты
-
-    // const checkNominal = (firstCurrency: Currency, secondCurrency: Currency) => {
-    //     if (firstCurrency!.Nominal > 1) {
-    //         firstCurrency!.Value = firstCurrency!.Value / firstCurrency!.Nominal
-    //         firstCurrency!.Nominal = 1
-    //     }
-    //     if (secondCurrency!.Nominal > 1) {
-    //         secondCurrency!.Value = secondCurrency!.Value / secondCurrency!.Nominal
-    //         secondCurrency!.Nominal = 1
-    //     }
-    // }
-    // useEffect(() => {
-    //     checkNominal(currencyObjectOfFirstField!, currencyObjectOfSecondField!)
-    // }, [])
 
     // Здесь вычилсяется значение, которое далее используется для ковертации
     let rateForChangeValue = currencyObjectOfFirstField!.Value / currencyObjectOfSecondField!.Value
@@ -53,10 +33,9 @@ export const CurrencyContainer = () => {
     }
 
     // Функция для смены валюты и пересчёта значение, в соответствии с новой валютой. Также присутствует проверка на 'рубль'
-    const changeCurrency = (currencyOfFirstField: string, currencyOfSecondField: string, value: string) => {
-        currencyObjectOfFirstField = currencies.find(el => el.CharCode === currencyOfFirstField)
-        currencyObjectOfSecondField = currencies.find(el => el.CharCode === currencyOfSecondField)
-        // checkNominal(currencyObjectOfFirstField!, currencyObjectOfSecondField!)
+    const changeCurrency = (firstCurrency: string, secondCurrency: string, value: string) => {
+        currencyObjectOfFirstField = currencies.find(el => el.CharCode === firstCurrency)
+        currencyObjectOfSecondField = currencies.find(el => el.CharCode === secondCurrency)
         rateForChangeValue = currencyObjectOfFirstField!.Value / currencyObjectOfSecondField!.Value
         if (currencyObjectOfFirstField!.CharCode === 'RUR') {
             rateForChangeValue = 1 / currencyObjectOfSecondField!.Value
@@ -67,7 +46,7 @@ export const CurrencyContainer = () => {
         if (currencyObjectOfFirstField!.CharCode === 'RUR' && currencyObjectOfSecondField!.CharCode === 'RUR') {
             rateForChangeValue = 1
         }
-        dispatch(setCurrentCurrency(currencyOfFirstField, currencyOfSecondField))
+        dispatch(setCurrentCurrency(firstCurrency, secondCurrency))
         changeFirstFieldValue(value)
     }
 
@@ -94,10 +73,6 @@ export const CurrencyContainer = () => {
             changeCurrency={changeCurrency}
             changeFirstFieldValue={changeFirstFieldValue}
             currencies={currencies}
-            countFirstField={countFirstField}
-            countSecondField={countSecondField}
-            currencyFirstField={currencyFirstField}
-            currencySecondField={currencySecondField}
             changeSecondFieldValue={changeSecondFieldValue}
         />
 
