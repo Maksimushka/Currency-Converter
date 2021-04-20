@@ -1,0 +1,54 @@
+@import "../ConverterContainer/Converter";
+
+.headerBlock {
+  height: 60px;
+  background-color: $mainColor;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  div {
+    width: 250px;
+    display: flex;
+    justify-content: space-around;
+    color: white;
+
+    a {
+      height: 22px;
+      color: white;
+      text-decoration: none;
+      box-sizing: border-box;
+      transition: all .4s ease 0s;
+      position: relative;
+
+      &:after {
+        content: '';
+        height: 2px;
+        top: 100%;
+        left: 0;
+        width: 0;
+        background-color: white;
+        position: absolute;
+      }
+
+      &:hover {
+        &:after {
+          content: '';
+          height: 2px;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          transition: all .3s ease;
+          background-color: white;
+          position: absolute;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 900px){
+  .headerBlock {
+    justify-content: center;
+  }
+}

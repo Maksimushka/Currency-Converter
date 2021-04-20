@@ -44,24 +44,20 @@ export type CurrencyReducerStateType = typeof initialState
 export const converterReducer = (state = initialState, action: CurrencyActionsTypeInProgress): CurrencyReducerStateType => {
     switch (action.type) {
         case ActionsTypes.SET_CURRENCIES: {
+            const filteredCurrencies = action.payload
+                .filter(el => el.CharCode !== 'XDR' && el.CharCode !== 'TJS')
+                .sort((a, b) => {
+                    if (a.Name < b.Name) return -1
+                    if (a.Name > b.Name) return 1
+                    return 0
+                })
             return {
                 ...state,
-                currencies: [...state.currencies, ...action.payload
-                    .filter(el => el.CharCode !== 'XDR' && el.CharCode !== 'TJS')
-                    .sort((a, b) => {
-                        if (a.Name < b.Name) return -1
-                        if (a.Name > b.Name) return 1
-                        return 0
-                    })
+                currencies: [
+                    ...state.currencies, ...filteredCurrencies
                     .map(el => (el.Nominal > 1) ? {...el, Value: el.Value / el.Nominal, Nominal: 1} : el)
                 ],
-                currenciesForList: action.payload
-                    .filter(el => el.CharCode !== 'XDR' && el.CharCode !== 'TJS')
-                    .sort((a, b) => {
-                        if (a.Name < b.Name) return -1
-                        if (a.Name > b.Name) return 1
-                        return 0
-                    })
+                currenciesForList: filteredCurrencies
             }
         }
         case ActionsTypes.SET_CURRENT_CURRENCY: {

@@ -6,6 +6,7 @@ import {getCurrencies} from './redux/actions/actions';
 import {storeRootType} from './redux/store';
 import {Route, Switch } from 'react-router-dom';
 import ListOfCurrencies from './copmonents/ListOfCurrencies/ListOfCurrencies';
+import Header from './copmonents/Header/Header';
 
 function App() {
     const {loading} = useSelector((state: storeRootType) => state.converter)
@@ -20,6 +21,7 @@ function App() {
 
     return (
         <div className="App">
+            <Header />
             <Switch>
                 <Route exact path={'/'} render={() => <CurrencyContainer/>} />
                 <Route path={'/list'} render={() => <ListOfCurrencies/>} />
