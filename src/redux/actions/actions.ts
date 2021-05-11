@@ -1,9 +1,8 @@
-// TYPES
-import {Dispatch} from 'redux';
 import {Currency} from '../reducer/converter-reducer';
-import {getData} from '../../API';
 
+// TYPES
 export enum ActionsTypes {
+    GET_CURRENCIES = 'GET_CURRENCIES',
     SET_CURRENCIES = 'SET_CURRENCIES',
     SET_CURRENT_CURRENCY = 'SET_CURRENT_CURRENCY',
     CHANGE_FIELD_VALUE = 'SET_FIELD_VALUE',
@@ -18,11 +17,12 @@ export type CurrencyActionsTypeInProgress = ReturnType<typeof setCurrenciesAC>
     | ReturnType<typeof setLoadingAC>
     | ReturnType<typeof setPopupCurrencyAC>
     | ReturnType<typeof setMainCurrenciesAC>
+    | ReturnType<typeof getCurrencies>
 
 // ACTION CREATORS
+export const getCurrencies = () => ({type: ActionsTypes.GET_CURRENCIES} as const)
 export const setCurrenciesAC = (currencies: Currency[]) => ({
-    type: ActionsTypes.SET_CURRENCIES,
-    payload: currencies
+    type: ActionsTypes.SET_CURRENCIES, payload: currencies
 } as const)
 export const setCurrentCurrency = (currencyOfFirstField: string, currencyOfSecondField: string) => ({
     type: ActionsTypes.SET_CURRENT_CURRENCY,
@@ -53,13 +53,3 @@ export const setMainCurrenciesAC = (currencies: Currency[]) => ({
     type: ActionsTypes.SET_MAIN_CURRENCY,
     payload: currencies
 } as const)
-
-// THUNK CREATORS
-export const getCurrencies = () => async (dispatch: Dispatch) => {
-    dispatch(setLoadingAC(true))
-    let {Valute} = await getData()
-    dispatch(setCurrenciesAC(Object.values(Valute)))
-    dispatch(setMainCurrenciesAC([Valute.USD, Valute.EUR, Valute.JPY]))
-    dispatch(setPopupCurrencyAC(Valute.CHF.CharCode, Valute.CHF.CharCode))
-    dispatch(setLoadingAC(false))
-}
